@@ -1,0 +1,8 @@
+{
+  "recommendations": [
+    // Generals
+    "usernamehw.errorlens",
+    // RUST
+    "rust-lang.rust-analyzer"
+  ]
+}
