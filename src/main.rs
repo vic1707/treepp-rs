@@ -17,6 +17,14 @@
     dead_code,                                // allowed for now
   )]
 
+/* Modules */
+mod cli;
+/* Use */
+use clap::Parser;
+use cli::Options;
+
 fn main() {
-  println!("Hello, world!");
+  let opts = Options::parse();
+
+  println!("{opts:#?}");
 }
