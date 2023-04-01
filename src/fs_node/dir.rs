@@ -11,13 +11,22 @@ pub struct Dir {
 
 impl Dir {
   pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
+    let mut size = 0;
+
     let entries = fs::read_dir(&path)?
-      .map(|entry| FSNode::build(entry?.path()))
+      .map(|entry| {
+        let node = FSNode::build(entry?.path());
+        if let Ok(node) = &node {
+          size += node.size();
+        }
+        node
+      })
       .collect::<Vec<FSNodeRes>>();
 
-    // TODO: calculate size of directory
-    let size = 0;
-
     Ok(Self { path, size, entries })
+  }
+
+  pub const fn size(&self) -> i128 {
+    self.size
   }
 }

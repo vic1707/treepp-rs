@@ -39,4 +39,12 @@ impl FSNode {
       Err(FSNodeError::UnknownNodeType(path))
     }
   }
+
+  pub const fn size(&self) -> i128 {
+    match self {
+      Self::File(file) => file.size(),
+      Self::Directory(dir) => dir.size(),
+      Self::SymbolicLink(symlink) => symlink.size(),
+    }
+  }
 }

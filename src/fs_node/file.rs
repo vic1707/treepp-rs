@@ -21,4 +21,8 @@ impl File {
       modified_date,
     })
   }
+
+  pub const fn size(&self) -> i128 {
+    self.size
+  }
 }

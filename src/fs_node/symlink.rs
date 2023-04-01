@@ -7,11 +7,17 @@ use super::FSNodeError;
 pub struct SymbolicLink {
   path: PathBuf,
   target: PathBuf,
+  size: i128,
 }
 
 impl SymbolicLink {
   pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
     let target = fs::read_link(&path)?;
-    Ok(Self { path, target })
+    let size = path.symlink_metadata()?.len().into();
+    Ok(Self { path, target, size })
+  }
+
+  pub const fn size(&self) -> i128 {
+    self.size
   }
 }

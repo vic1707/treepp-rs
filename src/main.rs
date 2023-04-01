@@ -6,6 +6,8 @@
     // clippy::cargo                          // disabled for now
   )]
 #![allow(
+    clippy::integer_arithmetic,               // used to calculate size of directory
+    clippy::arithmetic_side_effects,          // used to calculate size of directory
     clippy::blanket_clippy_restriction_lints, // allowed for now
     clippy::implicit_return,
     clippy::missing_docs_in_private_items,    // allowed for now
