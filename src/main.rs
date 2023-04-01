@@ -19,12 +19,19 @@
 
 /* Modules */
 mod cli;
+mod fs_node;
 /* Use */
 use clap::Parser;
 use cli::Options;
+use fs_node::FSNode;
 
 fn main() {
   let opts = Options::parse();
 
   println!("{opts:#?}");
+
+  for path in opts.paths {
+    let fs_node = FSNode::build(path);
+    println!("{fs_node:#?}");
+  }
 }
