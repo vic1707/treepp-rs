@@ -16,8 +16,8 @@ impl Dir {
     let entries = fs::read_dir(&path)?
       .map(|entry| {
         let node = FSNode::build(entry?.path());
-        if let Ok(node) = &node {
-          size += node.size();
+        if let Ok(ref n) = node {
+          size += n.size();
         }
         node
       })

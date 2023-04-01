@@ -41,10 +41,10 @@ impl FSNode {
   }
 
   pub const fn size(&self) -> i128 {
-    match self {
-      Self::File(file) => file.size(),
-      Self::Directory(dir) => dir.size(),
-      Self::SymbolicLink(symlink) => symlink.size(),
+    match *self {
+      Self::File(ref file) => file.size(),
+      Self::Directory(ref dir) => dir.size(),
+      Self::SymbolicLink(ref symlink) => symlink.size(),
     }
   }
 }
