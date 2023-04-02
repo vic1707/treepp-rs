@@ -25,15 +25,15 @@ mod fs_node;
 /* Use */
 use clap::Parser;
 use cli::Options;
-use fs_node::FSNode;
+use fs_node::{FSNode, FSNodeRes};
 
 fn main() {
   let opts = Options::parse();
 
-  println!("{opts:#?}");
+  let nodes = &opts.paths
+    .iter()
+    .map(FSNode::build)
+    .collect::<Vec<FSNodeRes>>();
 
-  for path in opts.paths {
-    let fs_node = FSNode::build(path);
-    println!("{fs_node:#?}");
-  }
+  println!("{nodes:#?}");
 }
