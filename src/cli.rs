@@ -1,5 +1,5 @@
 use clap::{command, Parser};
-use std::path::PathBuf;
+use std::{fs, io, path::PathBuf};
 
 /// Rust implementation of the tree-plus-plus command line tool.
 #[derive(Parser, Debug)]
@@ -10,6 +10,10 @@ pub struct Options {
   pub all: bool,
 
   /// Positional argument for the paths to list
-  #[arg(default_value = ".")]
+  #[arg(default_value = ".", value_parser = canonicalize)]
   pub paths: Vec<PathBuf>,
+}
+
+fn canonicalize(path: &str) -> io::Result<PathBuf> {
+  fs::canonicalize(path)
 }
