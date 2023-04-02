@@ -47,4 +47,12 @@ impl FSNode {
       Self::SymbolicLink(ref symlink) => symlink.size(),
     }
   }
+
+  pub const fn path(&self) -> &PathBuf {
+    match *self {
+      Self::File(ref file) => file.path(),
+      Self::Directory(ref dir) => dir.path(),
+      Self::SymbolicLink(ref symlink) => symlink.path(),
+    }
+  }
 }
