@@ -33,4 +33,8 @@ impl Dir {
   pub const fn path(&self) -> &PathBuf {
     &self.path
   }
+
+  pub fn entries(&self) -> &[FSNodeRes] {
+    &self.entries
+  }
 }

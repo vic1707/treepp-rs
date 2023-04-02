@@ -24,4 +24,8 @@ impl SymbolicLink {
   pub const fn path(&self) -> &PathBuf {
     &self.path
   }
+
+  pub const fn target(&self) -> &PathBuf {
+    &self.target
+  }
 }
