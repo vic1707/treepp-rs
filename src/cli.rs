@@ -10,10 +10,18 @@ pub struct Options {
   pub all: bool,
 
   /// Positional argument for the paths to list
-  #[arg(default_value = ".", value_parser = canonicalize)]
+  #[arg(default_value = ".", value_parser = canonicalize_dir)]
   pub paths: Vec<PathBuf>,
 }
 
-fn canonicalize(path: &str) -> io::Result<PathBuf> {
-  fs::canonicalize(path)
+fn canonicalize_dir(path: &str) -> io::Result<PathBuf> {
+  let p = fs::canonicalize(path)?;
+  // if path isn't a dir we error out
+  if !p.is_dir() {
+    return Err(io::Error::new(
+      io::ErrorKind::InvalidInput,
+      format!("{path} is not a directory"),
+    ));
+  }
+  Ok(p)
 }
