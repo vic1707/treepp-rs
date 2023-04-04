@@ -30,10 +30,10 @@ pub type FSNodeRes = Result<FSNode, FSNodeError>;
 impl FSNode {
   pub fn build<P: Into<PathBuf>>(path_: P) -> FSNodeRes {
     let path: PathBuf = path_.into();
-    if path.is_dir() {
-      Ok(Self::Directory(Dir::build(path)?))
-    } else if path.is_symlink() {
+    if path.is_symlink() {
       Ok(Self::SymbolicLink(SymbolicLink::build(path)?))
+    } else if path.is_dir() {
+      Ok(Self::Directory(Dir::build(path)?))
     } else if path.is_file() {
       Ok(Self::File(File::build(path)?))
     } else {
