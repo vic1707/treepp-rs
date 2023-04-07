@@ -6,9 +6,9 @@ mod dir;
 mod file;
 mod symlink;
 
-use dir::Dir;
-use file::File;
-use symlink::SymbolicLink;
+pub use dir::Dir;
+pub use file::File;
+pub use symlink::SymbolicLink;
 
 #[derive(Debug)]
 pub enum FSNode {

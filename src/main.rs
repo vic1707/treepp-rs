@@ -14,6 +14,7 @@
     clippy::mod_module_files,
     clippy::print_stdout,                     // allowed for now
     clippy::print_stderr,                     // allowed for now
+    clippy::pub_use,
     clippy::todo,                             // allowed for now
     clippy::use_debug,                        // allowed for now
     dead_code,                                // allowed for now
