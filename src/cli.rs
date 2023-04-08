@@ -16,7 +16,7 @@ pub struct Options {
 
 fn canonicalize_dir(path: &str) -> io::Result<PathBuf> {
   let p = fs::canonicalize(path)?;
-  // if path isn't a dir we error out
+  // if path isn't a dir we return an error
   if !p.is_dir() {
     return Err(io::Error::new(
       io::ErrorKind::InvalidInput,
