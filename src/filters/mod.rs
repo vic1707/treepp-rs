@@ -1,12 +1,11 @@
-// TODO: rename lifetime
 use crate::fs_node::{FSNode, FSNodeRes};
 
 mod functions;
 
 #[derive(Debug)]
-pub enum Filter<'a> {
+pub enum Filter<'exts> {
   Hidden,
-  Extension(&'a [&'a str]),
+  Extension(&'exts [&'exts str]),
   Files,
   SymLinks,
   Error,
@@ -28,12 +27,12 @@ impl Filter<'_> {
   }
 }
 
-pub struct FilterManager<'a> {
-  filters: &'a [Filter<'a>],
+pub struct FilterManager<'filters> {
+  filters: &'filters [Filter<'filters>],
 }
 
-impl<'a> FilterManager<'a> {
-  pub const fn new(filters: &'a [Filter<'a>]) -> Self {
+impl<'filters> FilterManager<'filters> {
+  pub const fn new(filters: &'filters [Filter<'filters>]) -> Self {
     Self { filters }
   }
 

@@ -1,4 +1,3 @@
-// TODO: rename lifetime
 use crate::fs_node::FSNodeRes;
 
 mod methods;
@@ -19,17 +18,17 @@ impl Sorter {
       Self::Name => nodes.sort_by_key(methods::name),
       Self::Size => nodes.sort_by_key(methods::size),
       Self::Extension => nodes.sort_by(methods::extension),
-      _ => todo!(),
+      Self::Modified | Self::FileFolder | Self::FolderFile => todo!(),
     }
   }
 }
 
-pub struct SorterManager<'a> {
-  sorters: &'a [Sorter],
+pub struct SorterManager<'sorters> {
+  sorters: &'sorters [Sorter],
 }
 
-impl <'a> SorterManager<'a> {
-  pub const fn new(sorters: &'a [Sorter]) -> Self {
+impl <'sorters> SorterManager<'sorters> {
+  pub const fn new(sorters: &'sorters [Sorter]) -> Self {
     Self { sorters }
   }
 
