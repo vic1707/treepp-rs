@@ -39,8 +39,8 @@ fn main() {
     .map(FSNode::build)
     .collect::<Vec<FSNodeRes>>();
 
-  // Exemple of use
-  FilterManager::new(vec![
+  // Exemple of use of FilterManager
+  FilterManager::new(&[
     Filter::Hidden,
     Filter::Extension(&["rs", "toml"]),
     Filter::Files,

@@ -29,11 +29,11 @@ impl Filter<'_> {
 }
 
 pub struct FilterManager<'a> {
-  filters: Vec<Filter<'a>>,
+  filters: &'a [Filter<'a>],
 }
 
 impl<'a> FilterManager<'a> {
-  pub fn new(filters: Vec<Filter<'a>>) -> Self {
+  pub const fn new(filters: &'a [Filter<'a>]) -> Self {
     Self { filters }
   }
 
