@@ -24,11 +24,13 @@
 mod cli;
 mod filters;
 mod fs_node;
+mod sorters;
 /* Use */
 use clap::Parser;
 use cli::Options;
 use filters::{Filter, FilterManager};
 use fs_node::{FSNode, FSNodeRes};
+use sorters::{Sorter, SorterManager};
 
 fn main() {
   let opts = Options::parse();
@@ -44,6 +46,13 @@ fn main() {
     Filter::Hidden,
     Filter::Extension(&["rs", "toml"]),
     Filter::Files,
+  ])
+  .apply(&mut nodes);
+
+  // Exemple of use of SorterManager
+  SorterManager::new(&[
+    Sorter::Name,
+    Sorter::Extension
   ])
   .apply(&mut nodes);
 
