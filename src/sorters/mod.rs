@@ -23,3 +23,19 @@ impl Sorter {
     }
   }
 }
+
+pub struct SorterManager<'a> {
+  sorters: &'a [Sorter],
+}
+
+impl <'a> SorterManager<'a> {
+  pub const fn new(sorters: &'a [Sorter]) -> Self {
+    Self { sorters }
+  }
+
+  pub fn apply(&self, nodes: &mut [FSNodeRes]) {
+    for sorter in self.sorters {
+      sorter.sort(nodes);
+    }
+  }
+}
