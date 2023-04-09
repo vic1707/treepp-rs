@@ -23,7 +23,11 @@ impl Dir {
       })
       .collect::<Vec<FSNodeRes>>();
 
-    Ok(Self { path, size, entries })
+    Ok(Self {
+      path,
+      size,
+      entries,
+    })
   }
 
   pub const fn size(&self) -> i128 {

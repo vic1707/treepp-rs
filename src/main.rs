@@ -33,18 +33,19 @@ use fs_node::{FSNode, FSNodeRes};
 fn main() {
   let opts = Options::parse();
 
-  let mut nodes = opts.paths
+  let mut nodes = opts
+    .paths
     .iter()
     .map(FSNode::build)
     .collect::<Vec<FSNodeRes>>();
 
   // Exemple of use
-  FilterManager::new(
-    vec![
-      Filter::Hidden,
-      Filter::Extension(&["rs", "toml"]),
-      Filter::Files
-    ]).apply(&mut nodes);
+  FilterManager::new(vec![
+    Filter::Hidden,
+    Filter::Extension(&["rs", "toml"]),
+    Filter::Files,
+  ])
+  .apply(&mut nodes);
 
   println!("{nodes:#?}");
 }
