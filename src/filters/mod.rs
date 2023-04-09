@@ -1,5 +1,5 @@
 // TODO: rename lifetime
-use crate::fs_node::FSNodeRes;
+use crate::fs_node::{FSNode, FSNodeRes};
 
 mod functions;
 
@@ -25,5 +25,27 @@ impl Filter<'_> {
       };
     }
     false
+  }
+}
+
+pub struct FilterManager<'a> {
+  filters: Vec<Filter<'a>>,
+}
+
+impl<'a> FilterManager<'a> {
+  pub fn new(filters: Vec<Filter<'a>>) -> Self {
+    Self { filters }
+  }
+
+  pub fn apply(&self, nodes: &mut Vec<FSNodeRes>) {
+    nodes.retain_mut(|node| self.filter_node(node));
+  }
+
+  fn filter_node(&self, node_: &mut FSNodeRes) -> bool {
+    if let Ok(FSNode::Directory(ref mut node)) = *node_ {
+      node.entries_mut().retain_mut(|n| self.filter_node(n));
+    }
+    // TODO: check logic and rewrite
+    !self.filters.iter().any(|filter| filter.filter(node_))
   }
 }
