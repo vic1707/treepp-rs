@@ -37,4 +37,8 @@ impl Dir {
   pub fn entries(&self) -> &[FSNodeRes] {
     &self.entries
   }
+
+  pub fn entries_mut(&mut self) -> &mut Vec<FSNodeRes> {
+    &mut self.entries
+  }
 }
