@@ -22,19 +22,29 @@
 
 /* Modules */
 mod cli;
+mod filters;
 mod fs_node;
 /* Use */
 use clap::Parser;
 use cli::Options;
+use filters::{Filter, FilterManager};
 use fs_node::{FSNode, FSNodeRes};
 
 fn main() {
   let opts = Options::parse();
 
-  let nodes = &opts.paths
+  let mut nodes = opts.paths
     .iter()
     .map(FSNode::build)
     .collect::<Vec<FSNodeRes>>();
+
+  // Exemple of use
+  FilterManager::new(
+    vec![
+      Filter::Hidden,
+      Filter::Extension(&["rs", "toml"]),
+      Filter::Files
+    ]).apply(&mut nodes);
 
   println!("{nodes:#?}");
 }
