@@ -16,7 +16,7 @@ pub enum Sorter {
 impl Sorter {
   pub fn sort(&self, nodes: &mut [FSNodeRes]) {
     match *self {
-      Self::Name => nodes.sort_by_key(methods::name),
+      Self::Name => nodes.sort_by(methods::name),
       Self::Size => nodes.sort_by_key(methods::size),
       Self::Extension => nodes.sort_by(methods::extension),
       Self::Modified | Self::FileFolder | Self::FolderFile => todo!(),
