@@ -35,6 +35,7 @@ impl<'sorters> SorterManager<'sorters> {
 
   pub fn apply(&self, nodes: &mut [FSNodeRes]) {
     for sorter in self.sorters {
+      // TODO: here, we are not sorting the entries of subdirectories
       sorter.sort(nodes);
     }
   }
