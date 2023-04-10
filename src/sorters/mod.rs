@@ -28,7 +28,7 @@ pub struct SorterManager<'sorters> {
   sorters: &'sorters [Sorter],
 }
 
-impl <'sorters> SorterManager<'sorters> {
+impl<'sorters> SorterManager<'sorters> {
   pub const fn new(sorters: &'sorters [Sorter]) -> Self {
     Self { sorters }
   }
