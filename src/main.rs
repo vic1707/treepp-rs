@@ -30,10 +30,11 @@ use clap::Parser;
 use cli::Options;
 use filters::{Filter, FilterManager};
 use fs_node::{FSNode, FSNodeRes};
-use sorters::{Sorter, SorterManager};
+use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
+  let sorter_manager = SorterManager::new(&opts.sorters);
 
   let mut nodes = opts
     .paths
@@ -49,12 +50,7 @@ fn main() {
   ])
   .apply(&mut nodes);
 
-  // Exemple of use of SorterManager
-  SorterManager::new(&[
-    Sorter::Name,
-    Sorter::Extension
-  ])
-  .apply(&mut nodes);
+  sorter_manager.apply(&mut nodes);
 
   println!("{nodes:#?}");
 }
