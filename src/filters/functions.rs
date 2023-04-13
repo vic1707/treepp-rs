@@ -15,9 +15,9 @@ pub const fn is_symlink(node: &FSNode) -> bool {
   matches!(*node, FSNode::SymbolicLink(_))
 }
 
-pub fn filter_ext_exc(node: &FSNode, exts: &[&str]) -> bool {
+pub fn filter_ext_exc(node: &FSNode, exts: &[String]) -> bool {
   node
     .path()
     .extension()
-    .map_or(false, |ext| exts.contains(&ext.to_string_lossy().as_ref()))
+    .map_or(false, |ext| exts.contains(&ext.to_string_lossy().to_string()))
 }

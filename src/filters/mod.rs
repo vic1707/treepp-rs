@@ -2,22 +2,24 @@ use crate::fs_node::{FSNode, FSNodeRes};
 
 mod functions;
 
-#[derive(Debug)]
-pub enum Filter<'exts> {
+#[derive(Debug, Clone, clap::ValueEnum)]
+pub enum Filter {
+  #[clap(skip)]
   Hidden,
-  Extension(&'exts [&'exts str]),
+  #[clap(skip)]
+  Extension(Vec<String>),
   Files,
   SymLinks,
   Error,
 }
 
-impl Filter<'_> {
+impl Filter {
   pub fn filter(&self, node_: &FSNodeRes) -> bool {
     // TODO: fix, this is not good for the Error variant
     if let Ok(ref node) = *node_ {
       return match *self {
         Self::Hidden => functions::is_hidden(node),
-        Self::Extension(exts) => functions::filter_ext_exc(node, exts),
+        Self::Extension(ref exts) => functions::filter_ext_exc(node, exts),
         Self::Files => functions::is_file(node),
         Self::SymLinks => functions::is_symlink(node),
         Self::Error => false,
@@ -27,12 +29,22 @@ impl Filter<'_> {
   }
 }
 
-pub struct FilterManager<'filters> {
-  filters: &'filters [Filter<'filters>],
+pub struct FilterManager {
+  filters: Vec<Filter>,
 }
 
-impl<'filters> FilterManager<'filters> {
-  pub const fn new(filters: &'filters [Filter<'filters>]) -> Self {
+impl FilterManager {
+  pub fn new(
+    mut filters: Vec<Filter>,
+    hidden: bool,
+    exts: Vec<String>,
+  ) -> Self {
+    if !hidden {
+      filters.push(Filter::Hidden);
+    }
+    if !exts.is_empty() {
+      filters.push(Filter::Extension(exts));
+    }
     Self { filters }
   }
 
