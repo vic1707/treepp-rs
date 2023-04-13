@@ -26,6 +26,7 @@ impl Dir {
         }
         node
       })
+      .filter(|node| filter_manager.filter(node))
       .collect::<Vec<FSNodeRes>>();
 
     Ok(Self {

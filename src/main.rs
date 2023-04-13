@@ -41,6 +41,7 @@ fn main() {
     .paths
     .iter()
     .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
+    .filter(|n| filter_manager.filter(n))
     .collect::<Vec<FSNodeRes>>();
 
   println!("{nodes:#?}");
