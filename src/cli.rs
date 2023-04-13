@@ -1,6 +1,7 @@
 use clap::{command, Parser};
 use std::{fs, io, path::PathBuf};
 
+use crate::filters::Filter;
 use crate::sorters::Sorter;
 
 /// Rust implementation of the tree-plus-plus command line tool.
@@ -18,6 +19,14 @@ pub struct Options {
   /// Sorters to apply to the list of files and directories.
   #[arg(short, long = "sorter", value_name = "sorter", value_enum)]
   pub sorters: Vec<Sorter>,
+
+  /// Filters to apply to the list of files and directories.
+  #[arg(short, long = "filter", value_name = "filter", value_enum)]
+  pub filters: Vec<Filter>,
+
+  /// Extensions to filter out.
+  #[arg(long = "filter-extension", value_name = "ext")]
+  pub exts: Vec<String>,
 }
 
 fn canonicalize_dir(path: &str) -> io::Result<PathBuf> {
