@@ -2,6 +2,7 @@ use crate::fs_node::{FSNode, FSNodeRes};
 
 mod functions;
 
+// TODO: Extension variant is exclusive, make an inclusive variant
 #[derive(Debug, Clone, clap::ValueEnum)]
 pub enum Filter {
   #[clap(skip)]
