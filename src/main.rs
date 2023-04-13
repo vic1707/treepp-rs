@@ -28,29 +28,20 @@ mod sorters;
 /* Use */
 use clap::Parser;
 use cli::Options;
-use filters::{Filter, FilterManager};
+use filters::FilterManager;
 use fs_node::{FSNode, FSNodeRes};
 use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
-  let sorter_manager = SorterManager::new(&opts.sorters);
+  let _sorter_manager = SorterManager::new(&opts.sorters);
+  let _filter_manager = FilterManager::new(opts.filters, opts.all, opts.exts);
 
-  let mut nodes = opts
+  let nodes = opts
     .paths
     .iter()
     .map(FSNode::build)
     .collect::<Vec<FSNodeRes>>();
-
-  // Exemple of use of FilterManager
-  FilterManager::new(&[
-    Filter::Hidden,
-    Filter::Extension(&["rs", "toml"]),
-    Filter::Files,
-  ])
-  .apply(&mut nodes);
-
-  sorter_manager.apply(&mut nodes);
 
   println!("{nodes:#?}");
 }
