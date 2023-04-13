@@ -2,6 +2,8 @@ use core::result::Result;
 use std::{io, path::PathBuf};
 use thiserror::Error;
 
+use crate::{FilterManager, SorterManager};
+
 mod dir;
 mod file;
 mod symlink;
@@ -28,12 +30,20 @@ pub enum FSNodeError {
 pub type FSNodeRes = Result<FSNode, FSNodeError>;
 
 impl FSNode {
-  pub fn build<P: Into<PathBuf>>(path_: P) -> FSNodeRes {
+  pub fn build<P: Into<PathBuf>>(
+    path_: P,
+    filter_manager: &FilterManager,
+    sorter_manager: &SorterManager,
+  ) -> FSNodeRes {
     let path: PathBuf = path_.into();
     if path.is_symlink() {
       Ok(Self::SymbolicLink(SymbolicLink::build(path)?))
     } else if path.is_dir() {
-      Ok(Self::Directory(Dir::build(path)?))
+      Ok(Self::Directory(Dir::build(
+        path,
+        filter_manager,
+        sorter_manager,
+      )?))
     } else if path.is_file() {
       Ok(Self::File(File::build(path)?))
     } else {

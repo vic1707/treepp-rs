@@ -1,6 +1,7 @@
 use std::{fs, path::PathBuf};
 
 use super::{FSNode, FSNodeError, FSNodeRes};
+use crate::{FilterManager, SorterManager};
 
 #[derive(Debug)]
 pub struct Dir {
@@ -10,12 +11,16 @@ pub struct Dir {
 }
 
 impl Dir {
-  pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
+  pub fn build(
+    path: PathBuf,
+    filter_manager: &FilterManager,
+    sorter_manager: &SorterManager,
+  ) -> Result<Self, FSNodeError> {
     let mut size = 0;
 
     let entries = fs::read_dir(&path)?
       .map(|entry| {
-        let node = FSNode::build(entry?.path());
+        let node = FSNode::build(entry?.path(), filter_manager, sorter_manager);
         if let Ok(ref n) = node {
           size += n.size();
         }

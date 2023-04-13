@@ -34,13 +34,13 @@ use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
-  let _sorter_manager = SorterManager::new(&opts.sorters);
-  let _filter_manager = FilterManager::new(opts.filters, opts.all, opts.exts);
+  let sorter_manager = SorterManager::new(&opts.sorters);
+  let filter_manager = FilterManager::new(opts.filters, opts.all, opts.exts);
 
   let nodes = opts
     .paths
     .iter()
-    .map(FSNode::build)
+    .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
     .collect::<Vec<FSNodeRes>>();
 
   println!("{nodes:#?}");
