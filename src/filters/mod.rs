@@ -1,4 +1,4 @@
-use crate::fs_node::{FSNode, FSNodeRes};
+use crate::fs_node::FSNodeRes;
 
 mod functions;
 
@@ -50,7 +50,6 @@ impl FilterManager {
   }
 
   pub fn filter(&self, node: &FSNodeRes) -> bool {
-    // TODO: check logic and maybe rewrite
-    self.filters.iter().any(|f| !f.filter(node))
+    !self.filters.iter().any(|f| f.filter(node))
   }
 }
