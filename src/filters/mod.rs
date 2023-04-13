@@ -49,15 +49,8 @@ impl FilterManager {
     Self { filters }
   }
 
-  pub fn apply(&self, nodes: &mut Vec<FSNodeRes>) {
-    nodes.retain_mut(|node| self.filter_node(node));
-  }
-
-  fn filter_node(&self, node_: &mut FSNodeRes) -> bool {
-    if let Ok(FSNode::Directory(ref mut node)) = *node_ {
-      node.entries_mut().retain_mut(|n| self.filter_node(n));
-    }
-    // TODO: check logic and rewrite
-    !self.filters.iter().any(|filter| filter.filter(node_))
+  pub fn filter(&self, node: &FSNodeRes) -> bool {
+    // TODO: check logic and maybe rewrite
+    self.filters.iter().any(|f| !f.filter(node))
   }
 }
