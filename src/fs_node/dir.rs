@@ -35,8 +35,8 @@ impl Dir {
     })
   }
 
-  pub const fn size(&self) -> i128 {
-    self.size
+  pub const fn size(&self) -> &i128 {
+    &self.size
   }
 
   pub const fn path(&self) -> &PathBuf {

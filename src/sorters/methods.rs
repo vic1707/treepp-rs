@@ -17,7 +17,7 @@ pub fn size(node1: &FSNodeRes, node2: &FSNodeRes) -> cmp::Ordering {
   let size1 = node1.as_ref().map_or_else(|_| None, |n| Some(n.size()));
   let size2 = node2.as_ref().map_or_else(|_| None, |n| Some(n.size()));
   match (size1, size2) {
-    (Some(s1), Some(s2)) => s1.cmp(&s2).then(s1.cmp(&s2)),
+    (Some(s1), Some(s2)) => s1.cmp(s2).then(s1.cmp(s2)),
     (Some(_), None) => cmp::Ordering::Less,
     (None, Some(_)) => cmp::Ordering::Greater,
     (None, None) => cmp::Ordering::Equal,
