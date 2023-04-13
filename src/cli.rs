@@ -16,7 +16,7 @@ pub struct Options {
   pub paths: Vec<PathBuf>,
 
   /// Sorters to apply to the list of files and directories.
-  #[arg(short, long, value_name = "sorter", value_enum)]
+  #[arg(short, long = "sorter", value_name = "sorter", value_enum)]
   pub sorters: Vec<Sorter>,
 }
 
