@@ -12,11 +12,13 @@
     clippy::implicit_return,
     clippy::missing_docs_in_private_items,    // allowed for now
     clippy::mod_module_files,
+    clippy::panic,                            // allowed for now
     clippy::print_stdout,                     // allowed for now
     clippy::print_stderr,                     // allowed for now
     clippy::pub_use,
     clippy::todo,                             // allowed for now
     clippy::use_debug,                        // allowed for now
+    clippy::wildcard_enum_match_arm,          // allowed for now
     dead_code,                                // allowed for now
   )]
 
