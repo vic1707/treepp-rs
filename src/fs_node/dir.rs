@@ -23,7 +23,7 @@ impl Dir {
       .map(|entry| {
         let node = FSNode::build(
           entry
-            .map_err(|err| FSNodeError::DirEntry(&path, &err))?
+            .map_err(|err| FSNodeError::dir_entry(&path, &err))?
             .path(),
           filter_manager,
           sorter_manager,

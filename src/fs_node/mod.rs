@@ -1,5 +1,5 @@
 use core::result::Result;
-use std::{io, path::PathBuf};
+use std::{io, path::Path, path::PathBuf};
 use thiserror::Error;
 
 use crate::{FilterManager, SorterManager};
@@ -93,7 +93,7 @@ impl FSNodeError {
     }
   }
 
-  pub fn DirEntry(_path: &PathBuf, err: &io::Error) -> Self {
+  pub fn dir_entry(_path: &Path, err: &io::Error) -> Self {
     panic!("Unknown error: {err}")
   }
 
