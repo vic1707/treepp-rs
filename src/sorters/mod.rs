@@ -39,14 +39,5 @@ impl<'sorters> SorterManager<'sorters> {
     for sorter in self.sorters {
       nodes.sort_by(|n1, n2| sorter.sort(n1, n2));
     }
-    // TODO: Here is an alternative method, find a way to benchmark it
-    // nodes.sort_by(|n1, n2| {
-    //   self
-    //     .sorters
-    //     .iter()
-    //     .map(|s| s.sort(n1, n2))
-    //     .find(|o| *o != cmp::Ordering::Equal)
-    //     .unwrap_or(cmp::Ordering::Equal)
-    // });
   }
 }
