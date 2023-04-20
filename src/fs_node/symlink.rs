@@ -12,8 +12,13 @@ pub struct SymbolicLink {
 
 impl SymbolicLink {
   pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
-    let target = fs::read_link(&path)?;
-    let size = path.symlink_metadata()?.len().into();
+    let target = fs::read_link(&path)
+      .map_err(|err| FSNodeError::read_link(path.clone(), &err))?;
+    let size = path
+      .symlink_metadata()
+      .map_err(|err| FSNodeError::metadata(path.clone(), &err))?
+      .len()
+      .into();
     Ok(Self { path, target, size })
   }
 

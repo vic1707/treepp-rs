@@ -23,8 +23,14 @@ pub enum FSNode {
 pub enum FSNodeError {
   #[error("`{0}` - Unknown node type")]
   UnknownNodeType(PathBuf),
-  #[error("`{0}`")]
-  IOError(#[from] io::Error),
+  #[error("`{0}` - Not found")]
+  NotFound(PathBuf),
+  #[error("`{0}` - Not enough permissions")]
+  NoPermissions(PathBuf),
+  #[error("`{0}` - Not a directory")]
+  NotADirectory(PathBuf),
+  #[error("`{0}` - Modified date not available")]
+  ModifiedNotAvailable(PathBuf),
 }
 
 pub type FSNodeRes = Result<FSNode, FSNodeError>;
@@ -64,6 +70,44 @@ impl FSNode {
       Self::File(ref file) => file.path(),
       Self::Directory(ref dir) => dir.path(),
       Self::SymbolicLink(ref symlink) => symlink.path(),
+    }
+  }
+}
+
+impl FSNodeError {
+  pub fn metadata(path: PathBuf, err: &io::Error) -> Self {
+    match err.kind() {
+      io::ErrorKind::NotFound => Self::NotFound(path),
+      io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
+      _ => panic!("Unknown error: {err}"),
+    }
+  }
+
+  pub fn read_dir(path: PathBuf, err: &io::Error) -> Self {
+    match err.kind() {
+      io::ErrorKind::NotFound => Self::NotFound(path),
+      io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
+      // only available on nightly -- issue #86442
+      // io::ErrorKind::NotADirectory => Self::NotADirectory(path),
+      _ => panic!("Unknown error: {err}"),
+    }
+  }
+
+  pub fn DirEntry(_path: &PathBuf, err: &io::Error) -> Self {
+    panic!("Unknown error: {err}")
+  }
+
+  pub fn modified(path: PathBuf, err: &io::Error) -> Self {
+    match err.kind() {
+      io::ErrorKind::Unsupported => Self::ModifiedNotAvailable(path),
+      _ => panic!("Unknown error: {err}"),
+    }
+  }
+
+  pub fn read_link(path: PathBuf, err: &io::Error) -> Self {
+    match err.kind() {
+      io::ErrorKind::NotFound => Self::NotFound(path),
+      _ => panic!("Unknown error: {err}"),
     }
   }
 }

@@ -18,9 +18,16 @@ impl Dir {
   ) -> Result<Self, FSNodeError> {
     let mut size = 0;
 
-    let entries = fs::read_dir(&path)?
+    let entries = fs::read_dir(&path)
+      .map_err(|err| FSNodeError::read_dir(path.clone(), &err))?
       .map(|entry| {
-        let node = FSNode::build(entry?.path(), filter_manager, sorter_manager);
+        let node = FSNode::build(
+          entry
+            .map_err(|err| FSNodeError::DirEntry(&path, &err))?
+            .path(),
+          filter_manager,
+          sorter_manager,
+        );
         if let Ok(ref n) = node {
           size += n.size();
         }
