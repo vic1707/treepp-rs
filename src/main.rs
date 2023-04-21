@@ -37,7 +37,7 @@ use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
-  let sorter_manager = SorterManager::new(&opts.sorters);
+  let sorter_manager = SorterManager::new(opts.sorters);
   let filter_manager = FilterManager::new(opts.filters, opts.all, opts.exts);
 
   let nodes = opts

@@ -27,17 +27,17 @@ impl Sorter {
   }
 }
 
-pub struct SorterManager<'sorters> {
-  sorters: &'sorters [Sorter],
+pub struct SorterManager {
+  sorters: Vec<Sorter>,
 }
 
-impl<'sorters> SorterManager<'sorters> {
-  pub const fn new(sorters: &'sorters [Sorter]) -> Self {
+impl SorterManager {
+  pub const fn new(sorters: Vec<Sorter>) -> Self {
     Self { sorters }
   }
 
   pub fn sort(&self, nodes: &mut [FSNodeRes]) {
-    for sorter in self.sorters {
+    for sorter in &self.sorters {
       nodes.sort_by(|n1, n2| sorter.sort(n1, n2));
     }
   }
