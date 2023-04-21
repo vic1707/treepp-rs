@@ -21,11 +21,11 @@ impl Dir {
     let mut size = 0;
 
     let entries = fs::read_dir(&path)
-      .map_err(|err| FSNodeError::read_dir(path.clone(), &err))?
+      .map_err(|ref err| FSNodeError::read_dir(path.clone(), err))?
       .map(|entry| {
         let node = FSNode::build(
           entry
-            .map_err(|err| FSNodeError::dir_entry(&path, &err))?
+            .map_err(|ref err| FSNodeError::dir_entry(&path, err))?
             .path(),
           filter_manager,
           sorter_manager,
@@ -39,9 +39,9 @@ impl Dir {
       .collect::<Vec<FSNodeRes>>();
 
     let modified_date = fs::metadata(&path)
-      .map_err(|err| FSNodeError::metadata(path.clone(), &err))?
+      .map_err(|ref err| FSNodeError::metadata(path.clone(), err))?
       .modified()
-      .map_err(|err| FSNodeError::modified(path.clone(), &err))?
+      .map_err(|ref err| FSNodeError::modified(path.clone(), err))?
       .into();
 
     Ok(Self {

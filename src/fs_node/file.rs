@@ -15,10 +15,10 @@ impl File {
   pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
     let metadata = path
       .metadata()
-      .map_err(|err| FSNodeError::metadata(path.clone(), &err))?;
+      .map_err(|ref err| FSNodeError::metadata(path.clone(), err))?;
     let modified_date = metadata
       .modified()
-      .map_err(|err| FSNodeError::modified(path.clone(), &err))?
+      .map_err(|ref err| FSNodeError::modified(path.clone(), err))?
       .into();
     Ok(Self {
       path,
