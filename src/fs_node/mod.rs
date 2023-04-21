@@ -72,6 +72,14 @@ impl FSNode {
       Self::SymbolicLink(ref symlink) => symlink.path(),
     }
   }
+
+  pub const fn modified_date(&self) -> &time::OffsetDateTime {
+    match *self {
+      Self::File(ref file) => file.modified_date(),
+      Self::Directory(ref dir) => dir.modified_date(),
+      Self::SymbolicLink(ref symlink) => symlink.modified_date(),
+    }
+  }
 }
 
 impl FSNodeError {
