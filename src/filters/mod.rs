@@ -15,18 +15,16 @@ pub enum Filter {
 }
 
 impl Filter {
-  pub fn filter(&self, node_: &FSNodeRes) -> bool {
-    // TODO: fix, this is not good for the Error variant
-    if let Ok(ref node) = *node_ {
-      return match *self {
-        Self::Hidden => functions::is_hidden(node),
-        Self::Extension(ref exts) => functions::filter_ext_exc(node, exts),
-        Self::Files => functions::is_file(node),
-        Self::SymLinks => functions::is_symlink(node),
+  pub fn filter(&self, node: &FSNodeRes) -> bool {
+    node
+      .as_ref()
+      .map_or(matches!(self, &Self::Error), |n| match *self {
+        Self::Hidden => functions::is_hidden(n),
+        Self::Extension(ref exts) => functions::filter_ext_exc(n, exts),
+        Self::Files => functions::is_file(n),
+        Self::SymLinks => functions::is_symlink(n),
         Self::Error => false,
-      };
-    }
-    false
+      })
   }
 }
 
