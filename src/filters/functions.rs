@@ -12,7 +12,7 @@ pub const fn is_file(node: &FSNode) -> bool {
 }
 
 pub const fn is_symlink(node: &FSNode) -> bool {
-  matches!(*node, FSNode::SymbolicLink(_))
+  matches!(*node, FSNode::Symlink(_))
 }
 
 pub fn filter_ext_exc(node: &FSNode, exts: &[String]) -> bool {

@@ -5,14 +5,14 @@ use time::OffsetDateTime;
 use super::FSNodeError;
 
 #[derive(Debug)]
-pub struct SymbolicLink {
+pub struct Symlink {
   path: PathBuf,
   target: PathBuf,
   size: i128,
   modified_date: OffsetDateTime,
 }
 
-impl SymbolicLink {
+impl Symlink {
   pub fn build(path: PathBuf) -> Result<Self, FSNodeError> {
     let metadata = path
       .symlink_metadata()
