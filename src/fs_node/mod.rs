@@ -45,11 +45,7 @@ impl FSNode {
     if path.is_symlink() {
       Ok(Self::Symlink(Symlink::build(path)?))
     } else if path.is_dir() {
-      Ok(Self::Dir(Dir::build(
-        path,
-        filter_manager,
-        sorter_manager,
-      )?))
+      Ok(Self::Dir(Dir::build(path, filter_manager, sorter_manager)?))
     } else if path.is_file() {
       Ok(Self::File(File::build(path)?))
     } else {
