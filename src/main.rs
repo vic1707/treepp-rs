@@ -16,6 +16,7 @@
     clippy::print_stdout,                     // allowed for now
     clippy::print_stderr,                     // allowed for now
     clippy::pub_use,
+    clippy::question_mark_used,
     clippy::todo,                             // allowed for now
     clippy::use_debug,                        // allowed for now
     clippy::wildcard_enum_match_arm,          // allowed for now
