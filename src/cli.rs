@@ -29,14 +29,12 @@ pub struct Options {
   pub exts: Vec<String>,
 }
 
-fn canonicalize_dir(path: &str) -> io::Result<PathBuf> {
-  let p = fs::canonicalize(path)?;
-  // if path isn't a dir we return an error
-  if !p.is_dir() {
-    return Err(io::Error::new(
+fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {
+  match fs::canonicalize(p) {
+    Ok(path) if path.is_dir() => Ok(path),
+    _ => Err(io::Error::new(
       io::ErrorKind::InvalidInput,
-      format!("{path} is not a directory"),
-    ));
+      format!("{p} is not a directory"),
+    )),
   }
-  Ok(p)
 }
