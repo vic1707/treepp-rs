@@ -38,3 +38,18 @@ pub fn extension(node1: &FSNodeRes, node2: &FSNodeRes) -> cmp::Ordering {
     (None, None) => cmp::Ordering::Equal,
   }
 }
+
+pub fn modified_date(node1: &FSNodeRes, node2: &FSNodeRes) -> cmp::Ordering {
+  let date1 = node1
+    .as_ref()
+    .map_or_else(|_| None, |n| Some(n.modified_date()));
+  let date2 = node2
+    .as_ref()
+    .map_or_else(|_| None, |n| Some(n.modified_date()));
+  match (date1, date2) {
+    (Some(d1), Some(d2)) => d1.cmp(d2).then(d1.cmp(d2)),
+    (Some(_), None) => cmp::Ordering::Less,
+    (None, Some(_)) => cmp::Ordering::Greater,
+    (None, None) => cmp::Ordering::Equal,
+  }
+}
