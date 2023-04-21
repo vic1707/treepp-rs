@@ -34,4 +34,8 @@ impl File {
   pub const fn path(&self) -> &PathBuf {
     &self.path
   }
+
+  pub const fn modified_date(&self) -> &OffsetDateTime {
+    &self.modified_date
+  }
 }
