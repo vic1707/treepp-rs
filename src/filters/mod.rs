@@ -8,7 +8,9 @@ pub enum Filter {
   #[clap(skip)]
   Hidden,
   #[clap(skip)]
-  Extension(Vec<String>),
+  ExtensionE(Vec<String>),
+  #[clap(skip)]
+  ExtensionI(Vec<String>),
   Files,
   SymLinks,
   Error,
@@ -20,7 +22,8 @@ impl Filter {
       .as_ref()
       .map_or(matches!(self, &Self::Error), |n| match *self {
         Self::Hidden => functions::is_hidden(n),
-        Self::Extension(ref exts) => functions::filter_ext_exc(n, exts),
+        Self::ExtensionE(ref exts) => functions::filter_ext_exc(n, exts),
+        Self::ExtensionI(ref exts) => functions::filter_ext_inc(n, exts),
         Self::Files => functions::is_file(n),
         Self::SymLinks => functions::is_symlink(n),
         Self::Error => false,
@@ -36,13 +39,13 @@ impl FilterManager {
   pub fn new(
     mut filters: Vec<Filter>,
     hidden: bool,
-    exts: Vec<String>,
+    exts_e: Vec<String>,
   ) -> Self {
     if !hidden {
       filters.push(Filter::Hidden);
     }
-    if !exts.is_empty() {
-      filters.push(Filter::Extension(exts));
+    if !exts_e.is_empty() {
+      filters.push(Filter::ExtensionE(exts_e));
     }
     Self { filters }
   }
