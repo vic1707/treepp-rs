@@ -31,6 +31,8 @@ pub enum FSNodeError {
   NotADirectory(PathBuf),
   #[error("`{0}` - Modified date not available")]
   ModifiedNotAvailable(PathBuf),
+  #[error("`{0}` - Interrupted")]
+  Interrupted(PathBuf),
   #[error("`{0}` `{1}` - Unknown error")]
   Unknown(PathBuf, io::ErrorKind),
 }
@@ -80,39 +82,64 @@ impl FSNode {
   }
 }
 
+/* https://doc.rust-lang.org/std/io/enum.ErrorKind.html */
 impl FSNodeError {
   pub fn metadata(path: PathBuf, err: &io::Error) -> Self {
+    /* https://doc.rust-lang.org/std/fs/fn.metadata.html */
     match err.kind() {
+      /* `path` does not exist */
       io::ErrorKind::NotFound => Self::NotFound(path),
+      /* The user lacks permissions to perform `metadata` call on `path` */
       io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
+      /* Fallback */
       _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
   pub fn read_dir(path: PathBuf, err: &io::Error) -> Self {
+    /* https://doc.rust-lang.org/std/fs/fn.read_dir.html */
     match err.kind() {
+      /* The provided `path` doesn’t exist */
       io::ErrorKind::NotFound => Self::NotFound(path),
+      /* The process lacks permissions to view the contents */
       io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
       // only available on nightly -- issue #86442
+      /* The path points at a non-directory file */
       // io::ErrorKind::NotADirectory => Self::NotADirectory(path),
+      /* Fallback */
       _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
   pub fn dir_entry(path: PathBuf, err: &io::Error) -> Self {
-    panic!("{}", Self::Unknown(path, err.kind()).to_string())
+    /* https://doc.rust-lang.org/std/fs/struct.ReadDir.html */
+    match err.kind() {
+      /* This `io::Result` will be an `Err` if there’s some sort of intermittent IO error during iteration. */
+      io::ErrorKind::Interrupted => Self::Interrupted(path),
+      // TODO: determine if other variants can be returned
+      /* Fallback */
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+    }
   }
 
   pub fn modified(path: PathBuf, err: &io::Error) -> Self {
+    /* https://doc.rust-lang.org/std/fs/struct.Metadata.html#method.modified */
     match err.kind() {
+      /* This field might not be available on all platforms */
       io::ErrorKind::Unsupported => Self::ModifiedNotAvailable(path),
+      /* Fallback */
       _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
   pub fn read_link(path: PathBuf, err: &io::Error) -> Self {
+    /* https://doc.rust-lang.org/std/fs/fn.read_link.html */
     match err.kind() {
+      /* `path` does not exist */
       io::ErrorKind::NotFound => Self::NotFound(path),
+      /* `path` is not a symbolic link */
+      // TODO: determine correct variant
+      /* Fallback */
       _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
