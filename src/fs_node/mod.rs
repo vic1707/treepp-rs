@@ -31,6 +31,8 @@ pub enum FSNodeError {
   NotADirectory(PathBuf),
   #[error("`{0}` - Modified date not available")]
   ModifiedNotAvailable(PathBuf),
+  #[error("`{0}` `{1}` - Unknown error")]
+  Unknown(PathBuf, io::ErrorKind),
 }
 
 pub type FSNodeRes = Result<FSNode, FSNodeError>;
@@ -83,7 +85,7 @@ impl FSNodeError {
     match err.kind() {
       io::ErrorKind::NotFound => Self::NotFound(path),
       io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
-      _ => panic!("Unknown error: {err}"),
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
@@ -93,25 +95,25 @@ impl FSNodeError {
       io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
       // only available on nightly -- issue #86442
       // io::ErrorKind::NotADirectory => Self::NotADirectory(path),
-      _ => panic!("Unknown error: {err}"),
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
-  pub fn dir_entry(_path: &Path, err: &io::Error) -> Self {
-    panic!("Unknown error: {err}")
+  pub fn dir_entry(path: PathBuf, err: &io::Error) -> Self {
+    panic!("{}", Self::Unknown(path, err.kind()).to_string())
   }
 
   pub fn modified(path: PathBuf, err: &io::Error) -> Self {
     match err.kind() {
       io::ErrorKind::Unsupported => Self::ModifiedNotAvailable(path),
-      _ => panic!("Unknown error: {err}"),
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 
   pub fn read_link(path: PathBuf, err: &io::Error) -> Self {
     match err.kind() {
       io::ErrorKind::NotFound => Self::NotFound(path),
-      _ => panic!("Unknown error: {err}"),
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
   }
 }

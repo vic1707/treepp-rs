@@ -25,7 +25,7 @@ impl Dir {
       .map(|entry| {
         let node = FSNode::build(
           entry
-            .map_err(|ref err| FSNodeError::dir_entry(&path, err))?
+            .map_err(|ref err| FSNodeError::dir_entry(path.clone(), err))?
             .path(),
           filter_manager,
           sorter_manager,
