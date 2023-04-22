@@ -25,8 +25,12 @@ pub struct Options {
   pub filters: Vec<Filter>,
 
   /// Extensions to filter out.
-  #[arg(long = "filter-extension", value_name = "ext")]
-  pub exts: Vec<String>,
+  #[arg(long = "filter-out-extension", value_name = "ext")]
+  pub exts_e: Vec<String>,
+
+  /// Extensions to filter in.
+  #[arg(long = "filter-in-extension", value_name = "ext")]
+  pub exts_i: Vec<String>,
 }
 
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {

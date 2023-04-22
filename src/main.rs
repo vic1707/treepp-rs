@@ -38,7 +38,8 @@ use sorters::SorterManager;
 fn main() {
   let opts = Options::parse();
   let sorter_manager = SorterManager::new(opts.sorters);
-  let filter_manager = FilterManager::new(opts.filters, opts.all, opts.exts);
+  let filter_manager =
+    FilterManager::new(opts.filters, opts.all, opts.exts_e);
 
   let nodes = opts
     .paths
