@@ -1,5 +1,7 @@
 use crate::fs_node::FSNode;
 
+// TODO: write tests for these functions
+
 pub fn is_hidden(node: &FSNode) -> bool {
   node
     .path()

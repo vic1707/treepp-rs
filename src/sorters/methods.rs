@@ -2,6 +2,8 @@ use core::cmp;
 
 use crate::fs_node::FSNodeRes;
 
+// TODO: write tests for these functions
+
 pub fn name(node1: &FSNodeRes, node2: &FSNodeRes) -> cmp::Ordering {
   let path1 = node1.as_ref().map_or_else(|_| None, |n| Some(n.path()));
   let path2 = node2.as_ref().map_or_else(|_| None, |n| Some(n.path()));
