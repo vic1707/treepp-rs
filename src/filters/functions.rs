@@ -20,3 +20,9 @@ pub fn filter_ext_exc(node: &FSNode, exts: &[String]) -> bool {
     exts.contains(&ext.to_string_lossy().to_string())
   })
 }
+
+pub fn filter_ext_inc(node: &FSNode, exts: &[String]) -> bool {
+  node.path().extension().map_or(true, |ext| {
+    !exts.contains(&ext.to_string_lossy().to_string())
+  })
+}
