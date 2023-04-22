@@ -29,6 +29,8 @@ pub enum FSNodeError {
   NoPermissions(PathBuf),
   #[error("`{0}` - Not a directory")]
   NotADirectory(PathBuf),
+  #[error("`{0}` - Not a symlink")]
+  NotASymlink(PathBuf),
   #[error("`{0}` - Modified date not available")]
   ModifiedNotAvailable(PathBuf),
   #[error("`{0}` - Interrupted")]
@@ -138,7 +140,7 @@ impl FSNodeError {
       /* `path` does not exist */
       io::ErrorKind::NotFound => Self::NotFound(path),
       /* `path` is not a symbolic link */
-      // TODO: determine correct variant
+      io::ErrorKind::InvalidInput => Self::NotASymlink(path),
       /* Fallback */
       _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
     }
