@@ -1,5 +1,5 @@
 use core::result::Result;
-use std::{io, path::Path, path::PathBuf};
+use std::{io, path::PathBuf};
 use thiserror::Error;
 
 use crate::{FilterManager, SorterManager};
@@ -94,7 +94,7 @@ impl FSNodeError {
       /* The user lacks permissions to perform `metadata` call on `path` */
       io::ErrorKind::PermissionDenied => Self::NoPermissions(path),
       /* Fallback */
-      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string()),
     }
   }
 
@@ -109,7 +109,7 @@ impl FSNodeError {
       /* The path points at a non-directory file */
       // io::ErrorKind::NotADirectory => Self::NotADirectory(path),
       /* Fallback */
-      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string()),
     }
   }
 
@@ -120,7 +120,7 @@ impl FSNodeError {
       io::ErrorKind::Interrupted => Self::Interrupted(path),
       // TODO: determine if other variants can be returned
       /* Fallback */
-      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string()),
     }
   }
 
@@ -130,7 +130,7 @@ impl FSNodeError {
       /* This field might not be available on all platforms */
       io::ErrorKind::Unsupported => Self::ModifiedNotAvailable(path),
       /* Fallback */
-      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string()),
     }
   }
 
@@ -142,7 +142,7 @@ impl FSNodeError {
       /* `path` is not a symbolic link */
       io::ErrorKind::InvalidInput => Self::NotASymlink(path),
       /* Fallback */
-      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string())
+      _ => panic!("{}", Self::Unknown(path, err.kind()).to_string()),
     }
   }
 }
