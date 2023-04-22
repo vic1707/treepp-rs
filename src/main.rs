@@ -39,7 +39,7 @@ fn main() {
   let opts = Options::parse();
   let sorter_manager = SorterManager::new(opts.sorters);
   let filter_manager =
-    FilterManager::new(opts.filters, opts.all, opts.exts_e);
+    FilterManager::new(opts.filters, opts.all, opts.exts_e, opts.exts_i);
 
   let nodes = opts
     .paths

@@ -40,12 +40,16 @@ impl FilterManager {
     mut filters: Vec<Filter>,
     hidden: bool,
     exts_e: Vec<String>,
+    exts_i: Vec<String>,
   ) -> Self {
     if !hidden {
       filters.push(Filter::Hidden);
     }
     if !exts_e.is_empty() {
       filters.push(Filter::ExtensionE(exts_e));
+    }
+    if !exts_i.is_empty() {
+      filters.push(Filter::ExtensionI(exts_i));
     }
     Self { filters }
   }
