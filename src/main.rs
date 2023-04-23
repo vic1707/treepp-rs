@@ -25,6 +25,7 @@
 
 /* Modules */
 mod cli;
+mod displayer;
 mod filters;
 mod fs_node;
 mod sorters;
