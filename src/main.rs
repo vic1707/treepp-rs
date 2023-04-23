@@ -38,16 +38,15 @@ use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
+  let displayer = displayer::Displayer::new(&displayer::Mode::Fancy, 4);
   let sorter_manager = SorterManager::new(opts.sorters);
   let filter_manager =
     FilterManager::new(opts.filters, opts.all, opts.exts_e, opts.exts_i);
 
-  let nodes = opts
+  opts
     .paths
     .iter()
     .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
     .filter(|n| filter_manager.filter(n))
-    .collect::<Vec<FSNodeRes>>();
-
-  println!("{nodes:#?}");
+    .for_each(|n| displayer.display(&n, ["", ""]));
 }
