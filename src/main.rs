@@ -34,8 +34,8 @@ mod sorters;
 /* Use */
 use clap::Parser;
 use cli::Options;
-use formatter::name_only::NameOnly;
 use filters::FilterManager;
+use formatter::name_only::NameOnly;
 use fs_node::{FSNode, FSNodeRes};
 use sorters::SorterManager;
 
