@@ -2,7 +2,7 @@ use crate::fs_node::FSNodeRes;
 
 mod functions;
 
-#[derive(Debug, Clone, clap::ValueEnum)]
+#[derive(Clone, clap::ValueEnum)]
 pub enum Filter {
   #[clap(skip)]
   Hidden,

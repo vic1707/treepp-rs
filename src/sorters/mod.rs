@@ -4,7 +4,7 @@ use crate::fs_node::FSNodeRes;
 
 mod methods;
 
-#[derive(Debug, Clone, clap::ValueEnum)]
+#[derive(Clone, clap::ValueEnum)]
 pub enum Sorter {
   Name,
   Size,

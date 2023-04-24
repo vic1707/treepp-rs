@@ -4,7 +4,6 @@ use time::OffsetDateTime;
 
 use super::FSNodeError;
 
-#[derive(Debug)]
 pub struct File {
   path: PathBuf,
   size: i128,

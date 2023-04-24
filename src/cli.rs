@@ -6,7 +6,7 @@ use crate::filters::Filter;
 use crate::sorters::Sorter;
 
 /// Rust implementation of the tree-plus-plus command line tool.
-#[derive(Parser, Debug)]
+#[derive(Parser)]
 #[command(author, version, about, propagate_version = true)]
 pub struct Options {
   /// Print all files and directories, including hidden ones.

@@ -4,7 +4,6 @@ use time::OffsetDateTime;
 use super::{FSNode, FSNodeError, FSNodeRes};
 use crate::{FilterManager, SorterManager};
 
-#[derive(Debug)]
 pub struct Dir {
   path: PathBuf,
   size: i128,

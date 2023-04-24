@@ -1,6 +1,6 @@
 use crate::{FSNode, FSNodeRes, formatter::Formatter};
 
-#[derive(Debug, Clone, clap::ValueEnum)]
+#[derive(Clone, clap::ValueEnum)]
 pub enum Mode {
   Fancy,  // "─", "│", "├", "└"
   Spaces, // " ", " ", " ", " "

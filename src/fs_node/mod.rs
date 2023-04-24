@@ -12,7 +12,6 @@ pub use dir::Dir;
 pub use file::File;
 pub use symlink::Symlink;
 
-#[derive(Debug)]
 pub enum FSNode {
   File(File),
   Dir(Dir),

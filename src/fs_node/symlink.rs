@@ -4,7 +4,6 @@ use time::OffsetDateTime;
 
 use super::FSNodeError;
 
-#[derive(Debug)]
 pub struct Symlink {
   path: PathBuf,
   target: PathBuf,
