@@ -28,12 +28,13 @@
 mod cli;
 mod displayer;
 mod filters;
+mod formatter;
 mod fs_node;
 mod sorters;
 /* Use */
 use clap::Parser;
 use cli::Options;
-use displayer::name_only::NameOnly;
+use formatter::name_only::NameOnly;
 use filters::FilterManager;
 use fs_node::{FSNode, FSNodeRes};
 use sorters::SorterManager;
