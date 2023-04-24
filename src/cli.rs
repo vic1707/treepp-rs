@@ -36,6 +36,10 @@ pub struct Options {
   /// Displaying mode.
   #[arg(short, long, value_name = "mode", value_enum, default_value = "fancy")]
   pub mode: Mode,
+
+  /// Tab size
+  #[arg(short, long, default_value = "4")]
+  pub tab_size: usize,
 }
 
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {

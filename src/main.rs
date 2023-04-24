@@ -40,7 +40,7 @@ use sorters::SorterManager;
 
 fn main() {
   let opts = Options::parse();
-  let displayer = displayer::Displayer::new(&opts.mode, 4);
+  let displayer = displayer::Displayer::new(&opts.mode, opts.tab_size);
   let sorter_manager = SorterManager::new(opts.sorters);
   let filter_manager =
     FilterManager::new(opts.filters, opts.all, opts.exts_e, opts.exts_i);

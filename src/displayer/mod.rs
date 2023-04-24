@@ -25,15 +25,15 @@ impl Mode {
 pub struct Displayer([String; 4]);
 
 impl Displayer {
-  pub fn new(mode: &Mode, depth_: usize) -> Self {
+  pub fn new(mode: &Mode, tab_size: usize) -> Self {
     let [h, v, t, b] = mode.get();
     // minus 2 to take the first char & leading space into account
-    let depth = depth_ - 2;
+    let padding = tab_size - 2;
     Self([
-      format!("{t}{} ", h.to_string().repeat(depth)),
-      format!("{v}{} ", " ".repeat(depth)),
-      format!("{b}{} ", h.to_string().repeat(depth)),
-      " ".repeat(depth_),
+      format!("{t}{} ", h.to_string().repeat(padding)),
+      format!("{v}{} ", " ".repeat(padding)),
+      format!("{b}{} ", h.to_string().repeat(padding)),
+      " ".repeat(tab_size),
     ])
   }
 
