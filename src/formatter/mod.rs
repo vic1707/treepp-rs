@@ -3,6 +3,20 @@ use crate::{FSNode, FSNodeRes};
 
 pub mod name_only;
 
+#[derive(Clone, clap::ValueEnum)]
+pub enum Formatter {
+  NameOnly,
+}
+
+impl Formatter {
+  // TODO: research `&dyn Trait` vs `Box<....>` or `&Box<....>`
+  pub fn get(&self) -> &dyn FormatterT {
+    match *self {
+      Self::NameOnly => &name_only::NameOnly {},
+    }
+  }
+}
+
 pub trait FormatterT {
   fn format_dir(&self, dir: &Dir) -> String;
   fn format_file(&self, file: &File) -> String;

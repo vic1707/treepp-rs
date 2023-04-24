@@ -3,6 +3,7 @@ use std::{fs, io, path::PathBuf};
 
 use crate::displayer::Mode;
 use crate::filters::Filter;
+use crate::formatter::Formatter;
 use crate::sorters::Sorter;
 
 /// Rust implementation of the tree-plus-plus command line tool.
@@ -40,6 +41,16 @@ pub struct Options {
   /// Tab size
   #[arg(short, long, default_value = "4")]
   pub tab_size: usize,
+
+  /// Formatter to use.
+  #[arg(
+    short = 'F',
+    long,
+    value_name = "formatter",
+    value_enum,
+    default_value = "name-only"
+  )]
+  pub formatter: Formatter,
 }
 
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {

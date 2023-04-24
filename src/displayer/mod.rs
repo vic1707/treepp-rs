@@ -38,7 +38,7 @@ impl Displayer {
     &self,
     node: &FSNodeRes,
     prefixes: [&str; 2],
-    formatter: &impl FormatterT,
+    formatter: &dyn FormatterT,
   ) {
     println!("{}{}", prefixes[0], formatter.format(node));
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };

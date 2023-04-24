@@ -35,7 +35,6 @@ mod sorters;
 use clap::Parser;
 use cli::Options;
 use filters::FilterManager;
-use formatter::name_only::NameOnly;
 use fs_node::{FSNode, FSNodeRes};
 use sorters::SorterManager;
 
@@ -45,11 +44,12 @@ fn main() {
   let sorter_manager = SorterManager::new(opts.sorters);
   let filter_manager =
     FilterManager::new(opts.filters, opts.all, opts.exts_e, opts.exts_i);
+  let formatter = opts.formatter.get();
 
   opts
     .paths
     .iter()
     .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
     .filter(|n| filter_manager.filter(n))
-    .for_each(|ref n| displayer.display(n, ["", ""], &NameOnly {}));
+    .for_each(|ref n| displayer.display(n, ["", ""], formatter));
 }
