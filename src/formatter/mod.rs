@@ -3,7 +3,7 @@ use crate::{FSNode, FSNodeRes};
 
 pub mod name_only;
 
-pub trait Formatter {
+pub trait FormatterT {
   fn format_dir(dir: &Dir) -> String;
   fn format_file(file: &File) -> String;
   fn format_symlink(symlink: &Symlink) -> String;

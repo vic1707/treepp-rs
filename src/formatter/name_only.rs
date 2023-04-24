@@ -1,9 +1,9 @@
-use super::Formatter;
+use super::FormatterT;
 use crate::fs_node::{Dir, File, Symlink};
 
 pub struct NameOnly;
 
-impl Formatter for NameOnly {
+impl FormatterT for NameOnly {
   fn format_dir(dir: &Dir) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_owned()
   }

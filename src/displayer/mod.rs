@@ -1,4 +1,4 @@
-use crate::{formatter::Formatter, FSNode, FSNodeRes};
+use crate::{formatter::FormatterT, FSNode, FSNodeRes};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Mode {
@@ -34,7 +34,7 @@ impl Displayer {
     ])
   }
 
-  pub fn display<T: Formatter>(&self, node: &FSNodeRes, prefixes: [&str; 2]) {
+  pub fn display<T: FormatterT>(&self, node: &FSNodeRes, prefixes: [&str; 2]) {
     println!("{}{}", prefixes[0], T::format(node));
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };
 
