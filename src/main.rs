@@ -51,5 +51,5 @@ fn main() {
     .iter()
     .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
     .filter(|n| filter_manager.filter(n))
-    .for_each(|ref n| displayer.display(n, ["", ""], &NameOnly{}));
+    .for_each(|ref n| displayer.display(n, ["", ""], &NameOnly {}));
 }
