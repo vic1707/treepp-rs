@@ -3,9 +3,11 @@ use crate::{FSNode, FSNodeRes};
 
 pub mod name_only;
 
+#[derive(Debug, Clone, clap::ValueEnum)]
 pub enum Mode {
   Fancy,  // "─", "│", "├", "└"
   Spaces, // " ", " ", " ", " "
+  #[clap(skip)]
   Custom(char, char, char, char),
 }
 

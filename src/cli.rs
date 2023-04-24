@@ -1,6 +1,7 @@
 use clap::{command, Parser};
 use std::{fs, io, path::PathBuf};
 
+use crate::displayer::Mode;
 use crate::filters::Filter;
 use crate::sorters::Sorter;
 
@@ -31,6 +32,10 @@ pub struct Options {
   /// Extensions to filter in.
   #[arg(long = "filter-in-extension", value_name = "ext")]
   pub exts_i: Vec<String>,
+
+  /// Displaying mode.
+  #[arg(short, long, value_name = "mode", value_enum, default_value = "fancy")]
+  pub mode: Mode,
 }
 
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {
