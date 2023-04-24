@@ -1,3 +1,4 @@
+#![allow(clippy::unwrap_used)] // as this file is a placeholder/POC
 use super::FormatterT;
 use crate::fs_node::{Dir, File, Symlink};
 
