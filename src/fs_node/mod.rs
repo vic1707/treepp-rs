@@ -42,6 +42,7 @@ pub type FSNodeRes = Result<FSNode, FSNodeError>;
 
 impl FSNode {
   pub fn build<P: Into<PathBuf>>(
+    // TODO: can we remove the `Into` trait bound?
     path_: P,
     filter_manager: &FilterManager,
     sorter_manager: &SorterManager,
