@@ -1,16 +1,16 @@
+/* Modules */
+pub mod dir;
+pub mod file;
+pub mod symlink;
+/* Built in imports */
 use core::result::Result;
 use std::{io, path::PathBuf};
 use thiserror::Error;
-
+/* Crate imports */
 use crate::{FilterManager, SorterManager};
-
-mod dir;
-mod file;
-mod symlink;
-
-pub use dir::Dir;
-pub use file::File;
-pub use symlink::Symlink;
+use dir::Dir;
+use file::File;
+use symlink::Symlink;
 
 pub enum FSNode {
   File(File),

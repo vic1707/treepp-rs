@@ -1,7 +1,9 @@
-use crate::fs_node::{Dir, FSNodeError, File, Symlink};
-use crate::{FSNode, FSNodeRes};
-
+/* Modules */
 pub mod name_only;
+/* Crate imports */
+use crate::fs_node::{
+  dir::Dir, file::File, symlink::Symlink, FSNode, FSNodeError, FSNodeRes,
+};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Formatter {

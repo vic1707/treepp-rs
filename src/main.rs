@@ -1,4 +1,4 @@
-// Clippy config
+/* Clippy config */
 #![warn(
     clippy::pedantic,
     clippy::restriction,
@@ -16,7 +16,6 @@
     clippy::panic,                            // allowed for now
     clippy::print_stdout,                     // allowed for now
     clippy::print_stderr,                     // allowed for now
-    clippy::pub_use,
     clippy::question_mark_used,
     clippy::todo,                             // allowed for now
     clippy::use_debug,                        // allowed for now
@@ -31,8 +30,9 @@ mod filters;
 mod formatters;
 mod fs_node;
 mod sorters;
-/* Use */
+/* External crates imports */
 use clap::Parser;
+/* Crate imports */
 use cli::Options;
 use displayer::Displayer;
 use filters::FilterManager;

@@ -1,6 +1,7 @@
-use crate::fs_node::FSNodeRes;
-
+/* Modules */
 mod functions;
+/* Crate imports */
+use crate::fs_node::FSNodeRes;
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Filter {

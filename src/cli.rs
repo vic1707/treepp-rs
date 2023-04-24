@@ -1,6 +1,8 @@
+/* External crates imports */
 use clap::{command, Parser};
+/* Built in imports */
 use std::{fs, io, path::PathBuf};
-
+/* Crate imports */
 use crate::displayer::Mode;
 use crate::filters::Filter;
 use crate::formatters::Formatter;

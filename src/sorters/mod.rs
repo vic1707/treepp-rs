@@ -1,8 +1,9 @@
-use core::cmp;
-
-use crate::fs_node::FSNodeRes;
-
+/* Modules */
 mod methods;
+/* Built in imports */
+use core::cmp;
+/* Crate imports */
+use crate::fs_node::FSNodeRes;
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Sorter {

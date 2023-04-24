@@ -1,6 +1,8 @@
-#![allow(clippy::unwrap_used)] // as this file is a placeholder/POC
+// as this file is a placeholder/POC
+#![allow(clippy::unwrap_used)]
+/* Crate imports */
 use super::FormatterT;
-use crate::fs_node::{Dir, File, Symlink};
+use crate::fs_node::{dir::Dir, file::File, symlink::Symlink};
 
 pub struct NameOnly;
 
