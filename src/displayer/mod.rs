@@ -1,6 +1,8 @@
 use crate::fs_node::{Dir, FSNodeError, File, Symlink};
 use crate::{FSNode, FSNodeRes};
 
+pub mod name_only;
+
 pub enum Mode {
   Fancy,  // "─", "│", "├", "└"
   Spaces, // " ", " ", " ", " "

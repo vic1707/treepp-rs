@@ -11,6 +11,7 @@
     clippy::blanket_clippy_restriction_lints, // allowed for now
     clippy::implicit_return,
     clippy::missing_docs_in_private_items,    // allowed for now
+    clippy::missing_trait_methods,            // warns when not overriding a default method
     clippy::mod_module_files,
     clippy::panic,                            // allowed for now
     clippy::print_stdout,                     // allowed for now
@@ -32,6 +33,7 @@ mod sorters;
 /* Use */
 use clap::Parser;
 use cli::Options;
+use displayer::name_only::NameOnly;
 use filters::FilterManager;
 use fs_node::{FSNode, FSNodeRes};
 use sorters::SorterManager;
@@ -48,5 +50,5 @@ fn main() {
     .iter()
     .map(|n| FSNode::build(n, &filter_manager, &sorter_manager))
     .filter(|n| filter_manager.filter(n))
-    .for_each(|ref n| displayer.display(n, ["", ""]));
+    .for_each(|ref n| displayer.display::<NameOnly>(n, ["", ""]));
 }
