@@ -1,3 +1,4 @@
+use crate::fs_node::{Dir, FSNodeError, File, Symlink};
 use crate::{FSNode, FSNodeRes};
 
 pub enum Mode {
@@ -32,27 +33,39 @@ impl Displayer {
     ])
   }
 
-  pub fn display(&self, node_: &FSNodeRes, prefixes: [&str; 2]) {
+  pub fn display<T: Formatter>(&self, node: &FSNodeRes, prefixes: [&str; 2]) {
+    println!("{}{}", prefixes[0], T::format(node));
+    let Ok(FSNode::Dir(ref dir)) = *node else { return; };
+
+    let new_prefixes = self.0.clone().map(|p| format!("{}{p}", prefixes[1]));
+
+    let num_entries = dir.entries().len();
+    dir.entries().iter().enumerate().for_each(|(i, n)| {
+      if i == num_entries - 1 {
+        self.display::<T>(n, [&new_prefixes[2], &new_prefixes[3]]);
+      } else {
+        self.display::<T>(n, [&new_prefixes[0], &new_prefixes[1]]);
+      }
+    });
+  }
+}
+
+pub trait Formatter {
+  fn format_dir(dir: &Dir) -> String;
+  fn format_file(file: &File) -> String;
+  fn format_symlink(symlink: &Symlink) -> String;
+  fn format_err(err: &FSNodeError) -> String {
+    format!("{err}")
+  }
+
+  fn format(node_: &FSNodeRes) -> String {
     match *node_ {
-      Ok(ref node) => {
-        // TODO: impl Display for FSNode
-        // println!("{}{node}", prefixes[0]);
-
-        let FSNode::Dir(ref dir) = *node else { return; };
-
-        let new_prefixes =
-          self.0.clone().map(|p| format!("{}{p}", prefixes[1]));
-
-        let num_entries = dir.entries().len();
-        dir.entries().iter().enumerate().for_each(|(i, n)| {
-          if i == num_entries - 1 {
-            self.display(n, [&new_prefixes[2], &new_prefixes[3]]);
-          } else {
-            self.display(n, [&new_prefixes[0], &new_prefixes[1]]);
-          }
-        });
+      Ok(ref node) => match *node {
+        FSNode::Dir(ref dir) => Self::format_dir(dir),
+        FSNode::File(ref file) => Self::format_file(file),
+        FSNode::Symlink(ref symlink) => Self::format_symlink(symlink),
       },
-      Err(ref err) => println!("{}{err}", prefixes[0]),
+      Err(ref err) => Self::format_err(err),
     }
   }
 }
