@@ -53,12 +53,8 @@ pub struct Options {
   pub formatter: Formatter,
 }
 
+// keeping this because providing `fs::canonicalize` as a value parser
+// doesn't work for some reason (lifetime issues)
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {
-  match fs::canonicalize(p) {
-    Ok(path) if path.is_dir() => Ok(path),
-    _ => Err(io::Error::new(
-      io::ErrorKind::InvalidInput,
-      format!("{p} is not a directory"),
-    )),
-  }
+  fs::canonicalize(p)
 }
