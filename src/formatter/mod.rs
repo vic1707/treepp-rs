@@ -4,21 +4,21 @@ use crate::{FSNode, FSNodeRes};
 pub mod name_only;
 
 pub trait FormatterT {
-  fn format_dir(dir: &Dir) -> String;
-  fn format_file(file: &File) -> String;
-  fn format_symlink(symlink: &Symlink) -> String;
-  fn format_err(err: &FSNodeError) -> String {
+  fn format_dir(&self, dir: &Dir) -> String;
+  fn format_file(&self, file: &File) -> String;
+  fn format_symlink(&self, symlink: &Symlink) -> String;
+  fn format_err(&self, err: &FSNodeError) -> String {
     format!("{err}")
   }
 
-  fn format(node_: &FSNodeRes) -> String {
+  fn format(&self, node_: &FSNodeRes) -> String {
     match *node_ {
       Ok(ref node) => match *node {
-        FSNode::Dir(ref dir) => Self::format_dir(dir),
-        FSNode::File(ref file) => Self::format_file(file),
-        FSNode::Symlink(ref symlink) => Self::format_symlink(symlink),
+        FSNode::Dir(ref dir) => self.format_dir(dir),
+        FSNode::File(ref file) => self.format_file(file),
+        FSNode::Symlink(ref symlink) => self.format_symlink(symlink),
       },
-      Err(ref err) => Self::format_err(err),
+      Err(ref err) => self.format_err(err),
     }
   }
 }

@@ -34,8 +34,8 @@ impl Displayer {
     ])
   }
 
-  pub fn display<T: FormatterT>(&self, node: &FSNodeRes, prefixes: [&str; 2]) {
-    println!("{}{}", prefixes[0], T::format(node));
+  pub fn display(&self, node: &FSNodeRes, prefixes: [&str; 2], formatter: &impl FormatterT) {
+    println!("{}{}", prefixes[0], formatter.format(node));
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };
 
     let new_prefixes = self.0.clone().map(|p| format!("{}{p}", prefixes[1]));
@@ -43,9 +43,9 @@ impl Displayer {
     let num_entries = dir.entries().len();
     dir.entries().iter().enumerate().for_each(|(i, n)| {
       if i == num_entries - 1 {
-        self.display::<T>(n, [&new_prefixes[2], &new_prefixes[3]]);
+        self.display(n, [&new_prefixes[2], &new_prefixes[3]], formatter);
       } else {
-        self.display::<T>(n, [&new_prefixes[0], &new_prefixes[1]]);
+        self.display(n, [&new_prefixes[0], &new_prefixes[1]], formatter);
       }
     });
   }

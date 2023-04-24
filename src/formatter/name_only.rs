@@ -4,11 +4,11 @@ use crate::fs_node::{Dir, File, Symlink};
 pub struct NameOnly;
 
 impl FormatterT for NameOnly {
-  fn format_dir(dir: &Dir) -> String {
+  fn format_dir(&self, dir: &Dir) -> String {
     dir.path().file_name().unwrap().to_str().unwrap().to_owned()
   }
 
-  fn format_file(file: &File) -> String {
+  fn format_file(&self, file: &File) -> String {
     file
       .path()
       .file_name()
@@ -18,7 +18,7 @@ impl FormatterT for NameOnly {
       .to_owned()
   }
 
-  fn format_symlink(symlink: &Symlink) -> String {
+  fn format_symlink(&self, symlink: &Symlink) -> String {
     symlink
       .path()
       .file_name()
