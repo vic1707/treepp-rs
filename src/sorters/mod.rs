@@ -4,7 +4,6 @@ use crate::fs_node::FSNodeRes;
 
 mod methods;
 
-// TODO: not a big fan of Clone if I can avoid it
 #[derive(Debug, Clone, clap::ValueEnum)]
 pub enum Sorter {
   Name,
