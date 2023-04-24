@@ -3,7 +3,7 @@ use std::{fs, io, path::PathBuf};
 
 use crate::displayer::Mode;
 use crate::filters::Filter;
-use crate::formatter::Formatter;
+use crate::formatters::Formatter;
 use crate::sorters::Sorter;
 
 /// Rust implementation of the tree-plus-plus command line tool.

@@ -28,7 +28,7 @@
 mod cli;
 mod displayer;
 mod filters;
-mod formatter;
+mod formatters;
 mod fs_node;
 mod sorters;
 /* Use */

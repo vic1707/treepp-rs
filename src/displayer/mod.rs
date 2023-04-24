@@ -1,4 +1,4 @@
-use crate::{formatter::FormatterT, FSNode, FSNodeRes};
+use crate::{formatters::FormatterT, FSNode, FSNodeRes};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Mode {
