@@ -10,7 +10,7 @@ pub enum Formatter {
 
 impl Formatter {
   // TODO: research `&dyn Trait` vs `Box<....>` or `&Box<....>`
-  pub fn get(&self) -> &dyn FormatterT {
+  pub const fn get(&self) -> &dyn FormatterT {
     match *self {
       Self::NameOnly => &name_only::NameOnly {},
     }
