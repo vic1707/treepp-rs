@@ -3,14 +3,14 @@ use crate::{FSNode, FSNodeRes};
 pub enum Mode {
   Fancy,  // "─", "│", "├", "└"
   Spaces, // " ", " ", " ", " "
-  Custom(&'static str, &'static str, &'static str, &'static str),
+  Custom(char, char, char, char),
 }
 
 impl Mode {
-  pub const fn get(&self) -> [&str; 4] {
+  pub const fn get(&self) -> [char; 4] {
     match *self {
-      Self::Fancy => ["\u{2500}", "\u{2502}", "\u{251c}", "\u{2514}"],
-      Self::Spaces => [" ", " ", " ", " "],
+      Self::Fancy => ['\u{2500}', '\u{2502}', '\u{251c}', '\u{2514}'],
+      Self::Spaces => [' ', ' ', ' ', ' '],
       Self::Custom(h, v, t, b) => [h, v, t, b],
     }
   }
@@ -25,9 +25,9 @@ impl Displayer {
     // minus 2 to take the first char & leading space into account
     let depth = depth_ - 2;
     Self([
-      format!("{t}{} ", h.repeat(depth)),
+      format!("{t}{} ", h.to_string().repeat(depth)),
       format!("{v}{} ", " ".repeat(depth)),
-      format!("{b}{} ", h.repeat(depth)),
+      format!("{b}{} ", h.to_string().repeat(depth)),
       " ".repeat(depth_),
     ])
   }
