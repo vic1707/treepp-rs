@@ -3,7 +3,7 @@ mod methods;
 /* Built in imports */
 use core::cmp;
 /* Crate imports */
-use crate::fs_node::FSNodeRes;
+use crate::fs_node::{FSNodeRes, FSNodeError, FSNode};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Sorter {
@@ -15,13 +15,14 @@ pub enum Sorter {
   Extension,
 }
 
+type SortingMethod = fn(&Result<FSNode, FSNodeError>, &Result<FSNode, FSNodeError>) -> cmp::Ordering;
 impl Sorter {
-  pub fn sort(&self, n1: &FSNodeRes, n2: &FSNodeRes) -> cmp::Ordering {
+  pub fn get_sorting_method(&self) -> SortingMethod {
     match *self {
-      Self::Name => methods::name(n1, n2),
-      Self::Size => methods::size(n1, n2),
-      Self::Extension => methods::extension(n1, n2),
-      Self::Modified => methods::modified_date(n1, n2),
+      Self::Name => methods::name,
+      Self::Size => methods::size,
+      Self::Extension => methods::extension,
+      Self::Modified => methods::modified_date,
     }
   }
 }
@@ -37,7 +38,8 @@ impl SorterManager {
 
   pub fn sort(&self, nodes: &mut [FSNodeRes]) {
     for sorter in &self.sorters {
-      nodes.sort_by(|n1, n2| sorter.sort(n1, n2));
+      let sorting_method = sorter.get_sorting_method();
+      nodes.sort_by(sorting_method);
     }
   }
 }
