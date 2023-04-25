@@ -18,6 +18,7 @@ pub enum FSNode {
   Symlink(Symlink),
 }
 
+#[allow(clippy::std_instead_of_core)]
 #[derive(Error, Debug)]
 pub enum FSNodeError {
   #[error("`{0}` - Unknown node type")]
@@ -61,25 +62,25 @@ impl FSNode {
 
   pub const fn size(&self) -> &i128 {
     match *self {
-      Self::File(ref file) => file.size(),
-      Self::Dir(ref dir) => dir.size(),
-      Self::Symlink(ref symlink) => symlink.size(),
+      Self::File(ref file) => &file.size,
+      Self::Dir(ref dir) => &dir.size,
+      Self::Symlink(ref symlink) => &symlink.size,
     }
   }
 
   pub const fn path(&self) -> &PathBuf {
     match *self {
-      Self::File(ref file) => file.path(),
-      Self::Dir(ref dir) => dir.path(),
-      Self::Symlink(ref symlink) => symlink.path(),
+      Self::File(ref file) => &file.path,
+      Self::Dir(ref dir) => &dir.path,
+      Self::Symlink(ref symlink) => &symlink.path,
     }
   }
 
   pub const fn modified_date(&self) -> &time::OffsetDateTime {
     match *self {
-      Self::File(ref file) => file.modified_date(),
-      Self::Dir(ref dir) => dir.modified_date(),
-      Self::Symlink(ref symlink) => symlink.modified_date(),
+      Self::File(ref file) => &file.modified_date,
+      Self::Dir(ref dir) => &dir.modified_date,
+      Self::Symlink(ref symlink) => &symlink.modified_date,
     }
   }
 }

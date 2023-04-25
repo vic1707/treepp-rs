@@ -6,10 +6,10 @@ use super::{FSNode, FSNodeError, FSNodeRes};
 use crate::{FilterManager, SorterManager};
 
 pub struct Dir {
-  path: PathBuf,
-  size: i128,
-  entries: Vec<FSNodeRes>,
-  modified_date: OffsetDateTime,
+  pub path: PathBuf,
+  pub size: i128,
+  pub entries: Vec<FSNodeRes>,
+  pub modified_date: OffsetDateTime,
 }
 
 impl Dir {
@@ -50,25 +50,5 @@ impl Dir {
       entries,
       modified_date,
     })
-  }
-
-  pub const fn size(&self) -> &i128 {
-    &self.size
-  }
-
-  pub const fn path(&self) -> &PathBuf {
-    &self.path
-  }
-
-  pub fn entries(&self) -> &[FSNodeRes] {
-    &self.entries
-  }
-
-  pub fn entries_mut(&mut self) -> &mut Vec<FSNodeRes> {
-    &mut self.entries
-  }
-
-  pub const fn modified_date(&self) -> &OffsetDateTime {
-    &self.modified_date
   }
 }

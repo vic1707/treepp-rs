@@ -6,9 +6,9 @@ use time::OffsetDateTime;
 use super::FSNodeError;
 
 pub struct File {
-  path: PathBuf,
-  size: i128,
-  modified_date: OffsetDateTime,
+  pub path: PathBuf,
+  pub size: i128,
+  pub modified_date: OffsetDateTime,
 }
 
 impl File {
@@ -25,17 +25,5 @@ impl File {
       size: metadata.len().into(),
       modified_date,
     })
-  }
-
-  pub const fn size(&self) -> &i128 {
-    &self.size
-  }
-
-  pub const fn path(&self) -> &PathBuf {
-    &self.path
-  }
-
-  pub const fn modified_date(&self) -> &OffsetDateTime {
-    &self.modified_date
   }
 }

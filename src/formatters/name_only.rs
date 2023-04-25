@@ -8,22 +8,16 @@ pub struct NameOnly;
 
 impl FormatterT for NameOnly {
   fn format_dir(&self, dir: &Dir) -> String {
-    dir.path().file_name().unwrap().to_str().unwrap().to_owned()
+    dir.path.file_name().unwrap().to_str().unwrap().to_owned()
   }
 
   fn format_file(&self, file: &File) -> String {
-    file
-      .path()
-      .file_name()
-      .unwrap()
-      .to_str()
-      .unwrap()
-      .to_owned()
+    file.path.file_name().unwrap().to_str().unwrap().to_owned()
   }
 
   fn format_symlink(&self, symlink: &Symlink) -> String {
     symlink
-      .path()
+      .path
       .file_name()
       .unwrap()
       .to_str()

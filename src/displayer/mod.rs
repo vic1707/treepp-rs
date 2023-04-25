@@ -46,8 +46,8 @@ impl Displayer {
 
     let new_prefixes = self.0.clone().map(|p| format!("{}{p}", prefixes[1]));
 
-    let num_entries = dir.entries().len();
-    dir.entries().iter().enumerate().for_each(|(i, n)| {
+    let num_entries = dir.entries.len();
+    dir.entries.iter().enumerate().for_each(|(i, n)| {
       if i == num_entries - 1 {
         self.display(n, [&new_prefixes[2], &new_prefixes[3]], formatter);
       } else {
