@@ -42,6 +42,7 @@ impl Displayer {
     formatter: &dyn FormatterT,
   ) {
     println!("{}{}", prefixes[0], formatter.format(node));
+    // Below lines only apply to directories
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };
     if dir.entries.len() == 0 {
       return;
