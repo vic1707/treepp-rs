@@ -3,7 +3,7 @@ mod methods;
 /* Built in imports */
 use core::cmp;
 /* Crate imports */
-use crate::fs_node::{FSNodeRes, FSNodeError, FSNode};
+use crate::fs_node::{FSNode, FSNodeError, FSNodeRes};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Sorter {
@@ -15,7 +15,10 @@ pub enum Sorter {
   Extension,
 }
 
-type SortingMethod = fn(&Result<FSNode, FSNodeError>, &Result<FSNode, FSNodeError>) -> cmp::Ordering;
+type SortingMethod = fn(
+  &Result<FSNode, FSNodeError>,
+  &Result<FSNode, FSNodeError>,
+) -> cmp::Ordering;
 impl Sorter {
   pub fn get_sorting_method(&self) -> SortingMethod {
     match *self {
