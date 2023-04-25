@@ -44,7 +44,7 @@ impl Displayer {
     println!("{}{}", prefixes[0], formatter.format(node));
     // Below lines only apply to directories
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };
-    if dir.entries.len() == 0 {
+    if dir.entries.is_empty() {
       return;
     }
 
