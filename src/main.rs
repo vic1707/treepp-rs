@@ -8,7 +8,7 @@
 #![allow(
     clippy::integer_arithmetic,               // used to calculate size of directory
     clippy::arithmetic_side_effects,          // used to calculate size of directory
-    clippy::blanket_clippy_restriction_lints, // allowed for now
+    clippy::blanket_clippy_restriction_lints, // allow clippy::restriction to be used globally
     clippy::implicit_return,
     clippy::missing_docs_in_private_items,    // allowed for now
     clippy::missing_trait_methods,            // warns when not overriding a default method
@@ -17,9 +17,6 @@
     clippy::print_stdout,                     // allowed for now
     clippy::print_stderr,                     // allowed for now
     clippy::question_mark_used,
-    clippy::todo,                             // allowed for now
-    clippy::use_debug,                        // allowed for now
-    clippy::wildcard_enum_match_arm,          // allowed for now
     dead_code,                                // allowed for now
   )]
 

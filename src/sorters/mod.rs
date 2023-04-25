@@ -10,8 +10,8 @@ pub enum Sorter {
   Name,
   Size,
   Modified,
-  FileFolder,
-  FolderFile,
+  // FileFolder, // TODO: implement
+  // FolderFile, // TODO: implement
   Extension,
 }
 
@@ -22,7 +22,6 @@ impl Sorter {
       Self::Size => methods::size(n1, n2),
       Self::Extension => methods::extension(n1, n2),
       Self::Modified => methods::modified_date(n1, n2),
-      Self::FileFolder | Self::FolderFile => todo!(),
     }
   }
 }
