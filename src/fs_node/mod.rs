@@ -5,7 +5,6 @@ pub mod symlink;
 /* Built in imports */
 use core::result::Result;
 use std::{io, path::PathBuf};
-use thiserror::Error;
 /* Crate imports */
 use crate::{FilterManager, SorterManager};
 use dir::Dir;
@@ -19,7 +18,7 @@ pub enum FSNode {
 }
 
 #[allow(clippy::std_instead_of_core)]
-#[derive(Error, Debug)]
+#[derive(thiserror::Error, Debug)]
 pub enum FSNodeError {
   #[error("`{0}` - Unknown node type")]
   UnknownNodeType(PathBuf),
