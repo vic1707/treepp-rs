@@ -43,6 +43,9 @@ impl Displayer {
   ) {
     println!("{}{}", prefixes[0], formatter.format(node));
     let Ok(FSNode::Dir(ref dir)) = *node else { return; };
+    if dir.entries.len() == 0 {
+      return;
+    }
 
     let new_prefixes = self.0.clone().map(|p| format!("{}{p}", prefixes[1]));
 
