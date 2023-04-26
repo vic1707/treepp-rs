@@ -5,6 +5,7 @@ use crate::{formatters::FormatterT, FSNode, FSNodeRes};
 pub enum Mode {
   Fancy,  // "─", "│", "├", "└"
   Spaces, // " ", " ", " ", " "
+  FancyAscii, // "-", "|", "+", "+"
   #[clap(skip)]
   Custom(char, char, char, char),
 }
@@ -14,6 +15,7 @@ impl Mode {
     match *self {
       Self::Fancy => ['\u{2500}', '\u{2502}', '\u{251c}', '\u{2514}'],
       Self::Spaces => [' ', ' ', ' ', ' '],
+      Self::FancyAscii => ['-', '|', '+', '+'],
       Self::Custom(h, v, t, b) => [h, v, t, b],
     }
   }
