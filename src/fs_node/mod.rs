@@ -53,7 +53,7 @@ impl FSNode {
       Ok(Self::File(File::build(path)?))
     } else {
       Err(FSNodeError {
-        filename: path.to_string_lossy().to_string(),
+        filename: file_name_to_string(&path),
         source: FSNodeErrorKind::UnknownNodeType,
       })
     }
@@ -87,8 +87,15 @@ impl FSNode {
 impl FSNodeError {
   pub fn new(path: &Path, err: &io::Error) -> Self {
     Self {
-      filename: path.to_string_lossy().to_string(),
+      filename: file_name_to_string(path),
       source: FSNodeErrorKind::IoError(err.kind()),
     }
   }
+}
+
+fn file_name_to_string(path: &Path) -> String {
+  path.file_name().map_or_else(
+    || path.to_string_lossy().to_string(),
+    |f| f.to_string_lossy().to_string(),
+  )
 }
