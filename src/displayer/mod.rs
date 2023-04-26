@@ -3,8 +3,8 @@ use crate::{formatters::FormatterT, FSNode, FSNodeRes};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Mode {
-  Fancy,  // "─", "│", "├", "└"
-  Spaces, // " ", " ", " ", " "
+  Fancy,      // "─", "│", "├", "└"
+  Spaces,     // " ", " ", " ", " "
   FancyAscii, // "-", "|", "+", "+"
   #[clap(skip)]
   Custom(char, char, char, char),
