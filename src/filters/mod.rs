@@ -1,7 +1,7 @@
 /* Modules */
 mod functions;
 /* Crate imports */
-use crate::fs_node::FSNodeRes;
+use crate::fs_node::{FSNode, FSNodeRes};
 
 #[derive(Clone, clap::ValueEnum)]
 pub enum Filter {
@@ -16,23 +16,28 @@ pub enum Filter {
   Error,
 }
 
+type FilteringMethod = Box<dyn Fn(&FSNode) -> bool>;
 impl Filter {
-  pub fn filter(&self, node: &FSNodeRes) -> bool {
-    node
-      .as_ref()
-      .map_or(matches!(self, &Self::Error), |n| match *self {
-        Self::Hidden => functions::is_hidden(n),
-        Self::ExtensionE(ref exts) => functions::filter_ext_exc(n, exts),
-        Self::ExtensionI(ref exts) => functions::filter_ext_inc(n, exts),
-        Self::Files => functions::is_file(n),
-        Self::SymLinks => functions::is_symlink(n),
-        Self::Error => false,
-      })
+  pub fn get_filtering_method(self) -> FilteringMethod {
+    match self {
+      Self::Hidden => Box::new(functions::is_hidden),
+      Self::ExtensionE(exts) => {
+        Box::new(move |n| functions::filter_ext_exc(n, &exts))
+      },
+      Self::ExtensionI(exts) => {
+        Box::new(move |n| functions::filter_ext_inc(n, &exts))
+      },
+      Self::Files => Box::new(functions::is_file),
+      Self::SymLinks => Box::new(functions::is_symlink),
+      #[allow(clippy::unreachable)]
+      Self::Error => unreachable!("Cannot be reached as it is tested before"),
+    }
   }
 }
 
 pub struct FilterManager {
-  filters: Vec<Filter>,
+  filtering_methods: Vec<FilteringMethod>,
+  keep_errors: bool,
 }
 
 impl FilterManager {
@@ -51,10 +56,28 @@ impl FilterManager {
     if !exts_i.is_empty() {
       filters.push(Filter::ExtensionI(exts_i));
     }
-    Self { filters }
+    let mut keep_errors = false;
+    let filtering_methods = filters
+      .into_iter()
+      .filter(|f| {
+        keep_errors |= matches!(f, &Filter::Error);
+        !matches!(f, &Filter::Error)
+      })
+      .map(Filter::get_filtering_method)
+      .collect::<Vec<FilteringMethod>>();
+
+    Self {
+      filtering_methods,
+      keep_errors,
+    }
   }
 
   pub fn filter(&self, node: &FSNodeRes) -> bool {
-    !self.filters.iter().any(|f| f.filter(node))
+    // TODO: can we remove
+    // `.as_ref()` 
+    // `!` (not very readable)
+    !node.as_ref().map_or(self.keep_errors, |n| {
+      self.filtering_methods.iter().any(|f| f(n))
+    })
   }
 }
