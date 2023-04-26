@@ -7,7 +7,7 @@ pub enum Mode {
   Spaces,     // " ", " ", " ", " "
   FancyAscii, // "-", "|", "+", "+"
   #[clap(skip)]
-  Custom(char, char, char, char),
+  Custom(char, char, char, char), // TODO: add custom mode
 }
 
 impl Mode {
