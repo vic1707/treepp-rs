@@ -17,8 +17,8 @@ pub enum Sorter {
 
 type SortingMethod = fn(&FSNodeRes, &FSNodeRes) -> cmp::Ordering;
 impl Sorter {
-  pub fn get_sorting_method(&self) -> SortingMethod {
-    match *self {
+  pub fn get_sorting_method(self) -> SortingMethod {
+    match self {
       Self::Name => methods::name,
       Self::Size => methods::size,
       Self::Extension => methods::extension,
@@ -28,18 +28,22 @@ impl Sorter {
 }
 
 pub struct SorterManager {
-  sorters: Vec<Sorter>,
+  sorting_methods: Vec<SortingMethod>,
 }
 
 impl SorterManager {
-  pub const fn new(sorters: Vec<Sorter>) -> Self {
-    Self { sorters }
+  pub fn new(sorters: Vec<Sorter>) -> Self {
+    let sorting_methods = sorters
+      .into_iter()
+      .map(Sorter::get_sorting_method)
+      .collect::<Vec<SortingMethod>>();
+
+    Self { sorting_methods }
   }
 
   pub fn sort(&self, nodes: &mut [FSNodeRes]) {
-    for sorter in &self.sorters {
-      let sorting_method = sorter.get_sorting_method();
-      nodes.sort_by(sorting_method);
+    for method in &self.sorting_methods {
+      nodes.sort_by(method);
     }
   }
 }
