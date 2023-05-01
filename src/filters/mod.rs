@@ -74,7 +74,7 @@ impl FilterManager {
 
   pub fn filter(&self, node: &FSNodeRes) -> bool {
     // TODO: can we remove
-    // `.as_ref()` 
+    // `.as_ref()`
     // `!` (not very readable)
     !node.as_ref().map_or(self.keep_errors, |n| {
       self.filtering_methods.iter().any(|f| f(n))
