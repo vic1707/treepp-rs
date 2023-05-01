@@ -41,7 +41,7 @@ impl Displayer {
     &self,
     node: &FSNodeRes,
     prefixes: [&str; 2],
-    formatter: &dyn FormatterT,
+    formatter: &impl FormatterT,
   ) {
     println!("{}{}", prefixes[0], formatter.format(node));
     // Below lines only apply to directories
