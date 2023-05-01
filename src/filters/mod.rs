@@ -59,6 +59,7 @@ impl FilterManager {
     let mut keep_errors = false;
     let filtering_methods = filters
       .into_iter()
+      // We remove the error filter as it is handled separately
       .filter(|f| {
         keep_errors |= matches!(f, &Filter::Error);
         !matches!(f, &Filter::Error)
