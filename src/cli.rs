@@ -49,8 +49,14 @@ pub struct Options {
   pub formatter: Formatter,
 }
 
-// keeping this because providing `fs::canonicalize` as a value parser
-// doesn't work for some reason (lifetime issues)
 fn canonicalize_dir(p: &str) -> io::Result<PathBuf> {
-  fs::canonicalize(p)
+  let path = fs::canonicalize(p)?;
+  if path.exists() {
+    Ok(path)
+  } else {
+    Err(io::Error::new(
+      io::ErrorKind::NotFound,
+      format!("No such file or directory: '{p}'"),
+    ))
+  }
 }
