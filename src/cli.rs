@@ -21,23 +21,23 @@ pub struct Options {
   pub paths: Vec<PathBuf>,
 
   /// Sorters to apply to the list of files and directories.
-  #[arg(short, long = "sorter", value_name = "sorter", value_enum)]
+  #[arg(short, long = "sorter", value_enum)]
   pub sorters: Vec<Sorter>,
 
   /// Filters to apply to the list of files and directories.
-  #[arg(short, long = "filter", value_name = "filter", value_enum)]
+  #[arg(short, long = "filter", value_enum)]
   pub filters: Vec<Filter>,
 
   /// Extensions to filter out.
-  #[arg(long = "filter-out-extension", value_name = "ext")]
+  #[arg(long = "filter-out-extension")]
   pub exts_e: Vec<String>,
 
   /// Extensions to filter in.
-  #[arg(long = "filter-in-extension", value_name = "ext")]
+  #[arg(long = "filter-in-extension")]
   pub exts_i: Vec<String>,
 
   /// Displaying mode.
-  #[arg(short, long, value_name = "mode", value_enum, default_value = "fancy")]
+  #[arg(short, long, value_enum, default_value = "fancy")]
   pub mode: Mode,
 
   /// Tab size
@@ -45,13 +45,7 @@ pub struct Options {
   pub tab_size: usize,
 
   /// Formatter to use.
-  #[arg(
-    short = 'F',
-    long,
-    value_name = "formatter",
-    value_enum,
-    default_value = "name-only"
-  )]
+  #[arg(short = 'F', long, value_enum, default_value = "name-only")]
   pub formatter: Formatter,
 }
 
