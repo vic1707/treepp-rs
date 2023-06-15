@@ -6,6 +6,7 @@ use super::{FSNode, FSNodeError, FSNodeRes};
 use crate::{FilterManager, SorterManager};
 
 pub struct Dir {
+  pub filename: String,
   pub path: PathBuf,
   pub size: i128,
   pub entries: Vec<FSNodeRes>,
@@ -44,7 +45,14 @@ impl Dir {
       .map_err(|ref err| FSNodeError::new(&path, err))?
       .into();
 
+    let filename = path
+      .file_name()
+      .ok_or_else(|| FSNodeError::new_no_filename(&path))?
+      .to_string_lossy()
+      .to_string();
+
     Ok(Self {
+      filename,
       path,
       size,
       entries,

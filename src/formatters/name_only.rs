@@ -8,20 +8,14 @@ pub struct NameOnly;
 
 impl FormatterT for NameOnly {
   fn format_dir(&self, dir: &Dir) -> String {
-    dir.path.file_name().unwrap().to_str().unwrap().to_owned()
+    dir.filename.clone()
   }
 
   fn format_file(&self, file: &File) -> String {
-    file.path.file_name().unwrap().to_str().unwrap().to_owned()
+  file.filename.clone()
   }
 
   fn format_symlink(&self, symlink: &Symlink) -> String {
-    symlink
-      .path
-      .file_name()
-      .unwrap()
-      .to_str()
-      .unwrap()
-      .to_owned()
+    format!("{} -> {}",symlink.filename.clone(), symlink.target_filename.clone())
   }
 }

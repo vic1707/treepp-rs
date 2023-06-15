@@ -91,6 +91,13 @@ impl FSNodeError {
       source: FSNodeErrorKind::IoError(err.kind()),
     }
   }
+
+  pub fn new_no_filename(path: &Path) -> Self {
+    Self {
+      filename: path.to_string_lossy().to_string(),
+      source: FSNodeErrorKind::IoError(io::ErrorKind::NotFound),
+    }
+  }
 }
 
 fn file_name_to_string(path: &Path) -> String {
