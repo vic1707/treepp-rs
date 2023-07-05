@@ -7,5 +7,5 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.2.5", features = ["derive"] }
-thiserror = "1.0.40"
+thiserror = "1.0.41"
 time = "0.3.20"
